@@ -14,7 +14,7 @@ const agentNames: Record<string, string> = {
 
 export default function Home() {
   const [activeAgentId, setActiveAgentId] = useState('1');
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
     <div

@@ -16,27 +16,7 @@ export interface Message {
   options?: string[];
 }
 
-const initialMessages: Message[] = [
-  {
-    id: '1',
-    role: 'assistant',
-    content: 'I\'ll send you a Slack message with comprehensive details about each external meeting participant.\n\nI\'ll send you a Slack message with comprehensive details about each external meeting participant.\n\nTo complete the setup, I need one clarification.',
-    timestamp: '9:00 AM',
-    tools: ['Google Calendar', 'Slack'],
-  },
-  {
-    id: '2',
-    role: 'assistant',
-    content: 'Where would you like to receive the Slack notifications?\n\n• Send as a direct message to yourself, or\n• Send to a specific Slack channel?',
-    timestamp: '9:00 AM',
-  },
-  {
-    id: '3',
-    role: 'user',
-    content: 'Once you let me know, I\'ll finish configuring the Slack message parameters and your workflow will be ready to go!',
-    timestamp: '9:02 AM',
-  },
-];
+const initialMessages: Message[] = [];
 
 interface ChatPanelProps {
   agentName: string;
@@ -318,6 +298,94 @@ This configuration initializes the intelligent inference pipeline utilizing the 
     el.style.height = Math.min(el.scrollHeight, 140) + 'px';
   };
 
+  const renderInputArea = () => (
+    <div
+      style={{
+        background: 'rgba(14, 10, 35, 0.55)',
+        border: '1px solid rgba(139, 92, 246, 0.25)',
+        borderRadius: '12px',
+        padding: '10px 14px',
+        display: 'flex',
+        alignItems: 'flex-end',
+        gap: '10px',
+        backdropFilter: 'blur(20px)',
+        WebkitBackdropFilter: 'blur(20px)',
+        boxShadow: '0 4px 30px rgba(0, 0, 0, 0.2)',
+        transition: 'border-color 0.2s, box-shadow 0.2s',
+      }}
+      onFocus={e => { e.currentTarget.style.borderColor = 'rgba(124, 58, 237, 0.6)'; e.currentTarget.style.boxShadow = '0 0 20px rgba(124, 58, 237, 0.15)'; }}
+      onBlur={e => { e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.25)'; e.currentTarget.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.2)'; }}
+    >
+      <div style={{ paddingBottom: '6px', cursor: 'pointer', color: 'var(--text-muted)' }}>
+         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+      </div>
+      <textarea
+        ref={textareaRef}
+        value={input}
+        onChange={handleInputChange}
+        onKeyDown={handleKeyDown}
+        placeholder="Ask anything"
+        rows={1}
+        style={{
+          flex: 1,
+          background: 'transparent',
+          border: 'none',
+          outline: 'none',
+          color: 'var(--text-primary)',
+          fontSize: '14px',
+          fontFamily: 'Inter, sans-serif',
+          resize: 'none',
+          lineHeight: '1.5',
+          height: '44px',
+          maxHeight: '140px',
+          overflowY: 'auto',
+          paddingTop: '11px',
+        }}
+      />
+      <div style={{ display: 'flex', gap: '6px', alignItems: 'center', paddingBottom: '6px' }}>
+        <button
+          style={{
+            background: 'none',
+            border: 'none',
+            color: 'var(--text-muted)',
+            cursor: 'pointer',
+            fontSize: '16px',
+            padding: '4px',
+            borderRadius: '6px',
+            transition: 'all 0.2s',
+          }}
+          title="Voice input"
+          onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.color = 'var(--accent-light)'; }}
+          onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = 'var(--text-muted)'; }}
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" x2="12" y1="19" y2="22"></line></svg>
+        </button>
+        <button
+          onClick={() => handleSend()}
+          disabled={!input.trim()}
+          style={{
+            width: '34px',
+            height: '34px',
+            background: input.trim() ? 'var(--gradient-purple)' : 'rgba(124, 58, 237, 0.1)',
+            border: '1px solid',
+            borderColor: input.trim() ? 'transparent' : 'var(--border-subtle)',
+            borderRadius: '8px',
+            color: input.trim() ? '#fff' : 'var(--text-muted)',
+            cursor: input.trim() ? 'pointer' : 'default',
+            fontSize: '14px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            transition: 'all 0.2s',
+            boxShadow: input.trim() ? '0 0 12px rgba(124, 58, 237, 0.4)' : 'none',
+          }}
+        >
+          ↑
+        </button>
+      </div>
+    </div>
+  );
+
   return (
     <div
       className="app-chat"
@@ -366,49 +434,47 @@ This configuration initializes the intelligent inference pipeline utilizing the 
           ←
         </button>
         <div style={{ flex: 1 }}>
-          <h2 style={{ fontSize: '14px', fontWeight: 600, color: 'var(--text-primary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-            {agentName}
+          <h2 style={{ fontSize: '15px', fontWeight: 600, color: 'var(--text-primary)', display: 'flex', alignItems: 'center' }}>
+            Edge-OS <span style={{ opacity: 0.5, fontSize: '10px', marginLeft: '6px', marginTop: '2px' }}>▼</span>
           </h2>
         </div>
-        <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
-          <AgentIconBtn emoji="⚙️" label="Settings" />
-          <AgentIconBtn emoji="🔗" label="Share" />
-          <AgentIconBtn emoji="📋" label="Copy" />
-          <AgentIconBtn emoji="↗️" label="Open" />
-          <AgentIconBtn emoji="⋯" label="More" />
+        <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+          <button style={{ background: '#fff', color: '#111', padding: '8px 16px', borderRadius: '20px', fontWeight: 600, fontSize: '13px', border: 'none', cursor: 'pointer', transition: 'opacity 0.2s' }} onMouseEnter={e => (e.currentTarget.style.opacity = '0.9')} onMouseLeave={e => (e.currentTarget.style.opacity = '1')}>
+            Log in
+          </button>
+          <button style={{ background: 'transparent', color: '#fff', padding: '8px 16px', borderRadius: '20px', fontWeight: 600, fontSize: '13px', border: '1px solid rgba(255,255,255,0.2)', cursor: 'pointer', transition: 'background 0.2s' }} onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.1)')} onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}>
+            Sign up for free
+          </button>
         </div>
       </div>
 
-      {/* Messages */}
-      <div
-        style={{
-          flex: 1,
-          overflowY: 'auto',
-          padding: '20px',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '4px',
-          position: 'relative',
-          zIndex: 5,
-        }}
-      >
-        {/* Copilot Header */}
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-            marginBottom: '16px',
-            padding: '8px 12px',
-            background: 'rgba(124, 58, 237, 0.08)',
-            borderRadius: '10px',
-            border: '1px solid var(--border-subtle)',
-            width: 'fit-content',
-          }}
-        >
-          <span style={{ fontSize: '14px' }}>✦</span>
-          <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--accent-light)' }}>Copilot</span>
+      {messages.length === 0 ? (
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', position: 'relative', zIndex: 5, padding: '0 20px', width: '100%' }}>
+          <h1 style={{ fontSize: '32px', fontWeight: 500, color: '#fff', marginBottom: '40px', letterSpacing: '-0.5px' }}>
+            Where should we begin?
+          </h1>
+          <div style={{ width: '100%', maxWidth: '750px', position: 'relative' }}>
+            {renderInputArea()}
+            <p style={{ textAlign: 'center', fontSize: '11px', color: 'var(--text-muted)', marginTop: '24px' }}>
+              By messaging Edge-OS, an AI chatbot, you agree to our Terms and have read our Privacy Policy.
+            </p>
+          </div>
         </div>
+      ) : (
+        <>
+          {/* Messages */}
+          <div
+            style={{
+              flex: 1,
+              overflowY: 'auto',
+              padding: '20px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '4px',
+              position: 'relative',
+              zIndex: 5,
+            }}
+          >
 
         {messages.map((msg, idx) => (
           <div
@@ -810,35 +876,7 @@ This configuration initializes the intelligent inference pipeline utilizing the 
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Test Send Banner */}
-      <div
-        style={{
-          padding: '0 20px 12px',
-          flexShrink: 0,
-        }}
-      >
-        <button
-          style={{
-            padding: '9px 20px',
-            background: 'var(--gradient-purple)',
-            border: 'none',
-            borderRadius: '8px',
-            color: '#fff',
-            fontSize: '13px',
-            fontWeight: 600,
-            cursor: 'pointer',
-            boxShadow: '0 0 20px rgba(124, 58, 237, 0.4)',
-            fontFamily: 'Inter, sans-serif',
-            transition: 'all 0.2s',
-          }}
-          onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 0 30px rgba(124, 58, 237, 0.7)'; }}
-          onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 0 20px rgba(124, 58, 237, 0.4)'; }}
-        >
-          🧪 Test send
-        </button>
-      </div>
-
-      {/* Input Area */}
+      {/* Input Area Sticky Bottom */}
       <div
         style={{
           padding: '0 20px 20px',
@@ -847,93 +885,14 @@ This configuration initializes the intelligent inference pipeline utilizing the 
           zIndex: 10,
         }}
       >
-        <div
-          style={{
-            background: 'rgba(14, 10, 35, 0.55)',
-            border: '1px solid rgba(139, 92, 246, 0.25)',
-            borderRadius: '12px',
-            padding: '10px 14px',
-            display: 'flex',
-            alignItems: 'flex-end',
-            gap: '10px',
-            backdropFilter: 'blur(20px)',
-            WebkitBackdropFilter: 'blur(20px)',
-            boxShadow: '0 4px 30px rgba(0, 0, 0, 0.2)',
-            transition: 'border-color 0.2s, box-shadow 0.2s',
-          }}
-          onFocus={e => { e.currentTarget.style.borderColor = 'rgba(124, 58, 237, 0.6)'; e.currentTarget.style.boxShadow = '0 0 20px rgba(124, 58, 237, 0.15)'; }}
-          onBlur={e => { e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.25)'; e.currentTarget.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.2)'; }}
-        >
-          <textarea
-            ref={textareaRef}
-            value={input}
-            onChange={handleInputChange}
-            onKeyDown={handleKeyDown}
-            placeholder="Chat with Copilot..."
-            rows={1}
-            style={{
-              flex: 1,
-              background: 'transparent',
-              border: 'none',
-              outline: 'none',
-              color: 'var(--text-primary)',
-              fontSize: '13px',
-              fontFamily: 'Inter, sans-serif',
-              resize: 'none',
-              lineHeight: '1.5',
-              height: '44px',
-              maxHeight: '140px',
-              overflowY: 'auto',
-              paddingTop: '12px',
-            }}
-          />
-          <div style={{ display: 'flex', gap: '6px', alignItems: 'center', paddingBottom: '6px' }}>
-            <button
-              style={{
-                background: 'none',
-                border: 'none',
-                color: 'var(--text-muted)',
-                cursor: 'pointer',
-                fontSize: '16px',
-                padding: '4px',
-                borderRadius: '6px',
-                transition: 'all 0.2s',
-              }}
-              title="Voice input"
-              onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.color = 'var(--accent-light)'; }}
-              onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = 'var(--text-muted)'; }}
-            >
-              🎤
-            </button>
-            <button
-              onClick={() => handleSend()}
-              disabled={!input.trim()}
-              style={{
-                width: '34px',
-                height: '34px',
-                background: input.trim() ? 'var(--gradient-purple)' : 'rgba(124, 58, 237, 0.1)',
-                border: '1px solid',
-                borderColor: input.trim() ? 'transparent' : 'var(--border-subtle)',
-                borderRadius: '8px',
-                color: input.trim() ? '#fff' : 'var(--text-muted)',
-                cursor: input.trim() ? 'pointer' : 'default',
-                fontSize: '14px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                transition: 'all 0.2s',
-                boxShadow: input.trim() ? '0 0 12px rgba(124, 58, 237, 0.4)' : 'none',
-              }}
-            >
-              ↑
-            </button>
-          </div>
-        </div>
+        {renderInputArea()}
         <p style={{ textAlign: 'center', fontSize: '10px', color: 'var(--text-muted)', marginTop: '8px' }}>
-          Hunt AI can make mistakes. Consider checking important information.
+          Edge-OS can make mistakes. Consider checking important information.
         </p>
       </div>
-    </div>
+    </>
+  )}
+</div>
   );
 }
 
