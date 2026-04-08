@@ -328,8 +328,13 @@ This configuration initializes the intelligent inference pipeline utilizing the 
         background: 'transparent',
         overflow: 'hidden',
         minWidth: 0,
+        position: 'relative',
       }}
     >
+      {/* Background Glowing Orbs */}
+      <div style={{ position: 'absolute', top: '5%', left: '15%', width: '45vw', height: '45vw', background: 'linear-gradient(135deg, rgba(124,58,237,0.15) 0%, rgba(0,0,0,0) 70%)', filter: 'blur(40px)', animation: 'orbFloat 20s infinite alternate ease-in-out', zIndex: 0, pointerEvents: 'none', borderRadius: '50%' }} />
+      <div style={{ position: 'absolute', bottom: '15%', right: '10%', width: '55vw', height: '55vw', background: 'linear-gradient(225deg, rgba(59,130,246,0.12) 0%, rgba(0,0,0,0) 70%)', filter: 'blur(60px)', animation: 'orbFloat 25s infinite alternate-reverse ease-in-out', zIndex: 0, pointerEvents: 'none', borderRadius: '50%' }} />
+
       {/* Chat Header */}
       <div
         style={{
@@ -337,9 +342,12 @@ This configuration initializes the intelligent inference pipeline utilizing the 
           display: 'flex',
           alignItems: 'center',
           gap: '10px',
-          background: 'transparent',
+          background: 'rgba(10, 8, 25, 0.4)',
+          backdropFilter: 'blur(20px)',
+          WebkitBackdropFilter: 'blur(20px)',
           flexShrink: 0,
-          borderBottom: 'none',
+          borderBottom: '1px solid rgba(139, 92, 246, 0.1)',
+          zIndex: 10,
         }}
       >
         <button
@@ -380,6 +388,8 @@ This configuration initializes the intelligent inference pipeline utilizing the 
           display: 'flex',
           flexDirection: 'column',
           gap: '4px',
+          position: 'relative',
+          zIndex: 5,
         }}
       >
         {/* Copilot Header */}
@@ -439,11 +449,13 @@ This configuration initializes the intelligent inference pipeline utilizing the 
                 padding: '12px 15px',
                 borderRadius: msg.role === 'user' ? '14px 14px 4px 14px' : '4px 14px 14px 14px',
                 background: msg.role === 'user'
-                  ? 'rgba(124, 58, 237, 0.22)'
-                  : 'rgba(26, 24, 48, 0.8)',
+                  ? 'rgba(124, 58, 237, 0.18)'
+                  : 'rgba(26, 24, 48, 0.65)',
                 border: msg.role === 'user'
                   ? '1px solid rgba(124, 58, 237, 0.4)'
-                  : '1px solid var(--border-subtle)',
+                  : '1px solid rgba(150, 130, 255, 0.15)',
+                backdropFilter: 'blur(10px)',
+                WebkitBackdropFilter: 'blur(10px)',
                 color: 'var(--text-primary)',
                 fontSize: '13px',
                 lineHeight: '1.65',
@@ -831,21 +843,26 @@ This configuration initializes the intelligent inference pipeline utilizing the 
         style={{
           padding: '0 20px 20px',
           flexShrink: 0,
+          position: 'relative',
+          zIndex: 10,
         }}
       >
         <div
           style={{
-            background: 'rgba(14, 10, 35, 0.65)',
-            border: '1px solid rgba(139, 92, 246, 0.28)',
+            background: 'rgba(14, 10, 35, 0.55)',
+            border: '1px solid rgba(139, 92, 246, 0.25)',
             borderRadius: '12px',
             padding: '10px 14px',
             display: 'flex',
             alignItems: 'flex-end',
             gap: '10px',
-            backdropFilter: 'blur(10px)',
-            transition: 'border-color 0.2s',
+            backdropFilter: 'blur(20px)',
+            WebkitBackdropFilter: 'blur(20px)',
+            boxShadow: '0 4px 30px rgba(0, 0, 0, 0.2)',
+            transition: 'border-color 0.2s, box-shadow 0.2s',
           }}
-          onFocus={() => {}}
+          onFocus={e => { e.currentTarget.style.borderColor = 'rgba(124, 58, 237, 0.6)'; e.currentTarget.style.boxShadow = '0 0 20px rgba(124, 58, 237, 0.15)'; }}
+          onBlur={e => { e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.25)'; e.currentTarget.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.2)'; }}
         >
           <textarea
             ref={textareaRef}
