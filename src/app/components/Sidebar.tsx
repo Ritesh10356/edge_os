@@ -34,6 +34,7 @@ export default function Sidebar({ activeAgentId, onSelectAgent }: SidebarProps) 
         flexDirection: 'column',
         height: '100%',
         overflow: 'hidden',
+        borderRight: '1px solid var(--border-subtle)',
       }}
     >
       {/* Logo */}
