@@ -1,0 +1,146 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+:root {
+  /* ── Semi-transparent panel colors ── */
+  /* The gradient lives on <html>, panels let it bleed through */
+  --bg-sidebar:    rgba(28, 24, 68, 0.82);
+  --bg-chat:       rgba(20, 17, 55, 0.75);
+  --bg-config:     rgba(18, 15, 50, 0.78);
+  --bg-card:       rgba(38, 32, 90, 0.55);
+  --bg-card-hover: rgba(48, 42, 108, 0.65);
+  --bg-input:      rgba(26, 22, 70, 0.72);
+  --bg-header:     rgba(14, 11, 38, 0.60);
+
+  /* ── Borders ── */
+  --border-subtle: rgba(140, 120, 255, 0.20);
+  --border-mid:    rgba(150, 130, 255, 0.32);
+
+  /* ── Accent ── */
+  --accent-primary: #7c3aed;
+  --accent-light:   #a78bfa;
+  --accent-glow:    rgba(124, 58, 237, 0.35);
+
+  /* ── Text ── */
+  --text-primary:   #ddd8f8;
+  --text-secondary: #9b97c0;
+  --text-muted:     #5a5878;
+
+  /* ── Shared gradients ── */
+  --gradient-purple: linear-gradient(135deg, #7c3aed, #4f46e5);
+  --shadow-glow:     0 0 30px rgba(124, 58, 237, 0.2);
+}
+
+/* ============================================================
+   RESET
+============================================================ */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ============================================================
+   HTML — THE GRADIENT LIVES HERE
+   Top (vivid purple) → Bottom (near-black navy)
+   Matching the reference screenshot exactly.
+   We put it on html (not body) so it fills the full viewport
+   and shows through the semi-transparent panels above it.
+============================================================ */
+html {
+  height: 100%;
+  /* Top → Bottom gradient matching reference */
+  background-color: #0c0a28;
+  background-image: linear-gradient(
+    to bottom,
+    #16133a 0%,    /* TOP   — lightly darker indigo */
+    #110f30 15%,   /* near top */
+    #0d0b2a 35%,   /* upper mid */
+    #0a0822 55%,   /* mid */
+    #08061a 75%,   /* lower mid */
+    #060514 100%   /* BOTTOM — near black */
+  );
+  /* Ensure gradient covers the full screen */
+  background-attachment: fixed;
+}
+
+body {
+  height: 100%;
+  background: transparent;
+  /* Premium System Font Stack + Inter */
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ============================================================
+   RESPONSIVE LAYOUT CLASSES
+============================================================ */
+.app-sidebar {
+  transition: transform 0.3s ease, width 0.3s ease;
+}
+
+.app-chat {
+  transition: width 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .app-sidebar {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 50;
+    width: 85vw !important;
+    max-width: 320px;
+    background: #0f0d2b !important; /* solid background for mobile drawer to hide chat behind */
+    box-shadow: 10px 0 50px rgba(0, 0, 0, 0.7);
+  }
+
+  .app-chat {
+    width: 100vw !important;
+  }
+}
+
+/* Subtle grain overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 160px 160px;
+}
+
+/* ============================================================
+   CUSTOM SCROLLBAR
+============================================================ */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(124,58,237,0.35); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(124,58,237,0.6); }
+
+/* ============================================================
+   ANIMATIONS
+============================================================ */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes typing-dot {
+  0%, 60%, 100% { transform: translateY(0);   opacity: 0.4; }
+  30%           { transform: translateY(-6px); opacity: 1;   }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 10px rgba(124,58,237,0.3); }
+  50%       { box-shadow: 0 0 25px rgba(124,58,237,0.6), 0 0 50px rgba(124,58,237,0.2); }
+}
+
+.animate-fade-in-up { animation: fadeInUp 0.4s ease forwards; }
+.typing-dot { animation: typing-dot 1.4s infinite; }
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
