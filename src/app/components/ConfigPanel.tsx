@@ -47,14 +47,19 @@ export default function ConfigPanel({ agentName }: ConfigPanelProps) {
 
   return (
     <div
+      className="glass-panel"
       style={{
         width: '420px',
         minWidth: '380px',
-        background: 'transparent',
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
         overflow: 'hidden',
+        borderLeft: '1px solid var(--border-subtle)',
+        borderTop: 'none',
+        borderBottom: 'none',
+        borderRight: 'none',
+        borderRadius: '0 24px 24px 0',
       }}
     >
       {/* Panel Header */}

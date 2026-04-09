@@ -17,29 +17,18 @@ export default function Home() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
-    <div style={{ 
-      minHeight: '100vh', 
-      width: '100vw', 
-      display: 'flex', 
-      alignItems: 'center', 
-      justifyContent: 'center',
-      padding: '24px'
-    }}>
-      <div
-        className="glass-panel"
-        style={{
-          display: 'flex',
-          height: '100%',
-          minHeight: '85vh',
-          maxHeight: '90vh',
-          width: '100%',
-          maxWidth: '1400px',
-          overflow: 'hidden',
-          position: 'relative',
-          zIndex: 1,
-          borderRadius: '24px', // Extra rounded corners for the outer box
-        }}
-      >
+    <div
+      className="glass-panel"
+      style={{
+        display: 'flex',
+        height: '100vh',
+        width: '100vw',
+        overflow: 'hidden',
+        position: 'relative',
+        zIndex: 1,
+        borderRadius: 0, // Removed rounded corners since it is full edge-to-edge screen
+      }}
+    >
         {isSidebarOpen && <Sidebar activeAgentId={activeAgentId} onSelectAgent={setActiveAgentId} />}
         <ChatPanel
           agentName={agentNames[activeAgentId]}
@@ -47,6 +36,5 @@ export default function Home() {
           isSidebarOpen={isSidebarOpen}
         />
       </div>
-    </div>
   );
 }

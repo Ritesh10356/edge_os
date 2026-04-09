@@ -76,12 +76,10 @@ export default function Sidebar({ activeAgentId, onSelectAgent }: SidebarProps) 
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', padding: '16px 12px' }}>
         <button
+          className="glass-panel"
           style={{
             width: '100%',
             padding: '10px 14px',
-            background: 'rgba(255, 255, 255, 0.03)',
-            border: '1px solid var(--border-subtle)',
-            borderRadius: '10px',
             color: 'var(--text-primary)',
             fontSize: '13px',
             fontWeight: 600,
