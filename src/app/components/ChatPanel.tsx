@@ -941,80 +941,67 @@ This configuration initializes the intelligent inference pipeline utilizing the 
                                 const indentMatch = line.match(/^\s*/);
                                 const indent = indentMatch ? indentMatch[0] : '';
 
-                                if (trimmedLine.startsWith('#')) {
-                                  return <div key={i}><span style={{ whiteSpace: 'pre' }}>{indent}</span><span style={{ color: '#888888', fontStyle: 'italic' }}>{trimmedLine}</span></div>;
+                                // 1. Comments
+                                if (trimmedLine.startsWith('#') || trimmedLine.startsWith('//')) {
+                                  return <div key={i}><span style={{ whiteSpace: 'pre' }}>{indent}</span><span style={{ color: '#8b949e', fontStyle: 'italic' }}>{trimmedLine}</span></div>;
                                 }
 
-                                // 2. Arrays / Dashes
-                                if (trimmedLine.startsWith('- ')) {
-                                  const valPart = trimmedLine.substring(2);
-                                  let valElement = <span style={{ color: '#e1e1e9' }}>{valPart}</span>;
+                                // 2. Keyword detection & Enhanced Tokens (Vibrant Green Focus)
+                                const keywords = ['import', 'from', 'const', 'let', 'var', 'export', 'default', 'function', 'return', 'type', 'interface', 'if', 'else', 'for', 'while', 'def', 'class', 'async', 'await', 'true', 'false'];
+                                const types = ['string', 'number', 'boolean', 'any', 'void', 'React', 'useState', 'useEffect'];
+                                
+                                // Tokenizer regex that captures words, spaces, and punctuations
+                                const tokens = line.split(/(\s+|[:{}()[\],;."']|(?<=")|(?='))/);
+                                
+                                return (
+                                  <div key={i} style={{ minHeight: '19px' }}>
+                                    {[...tokens].map((token, j) => {
+                                      if (!token) return null;
+                                      
+                                      const trimmed = token.trim();
+                                      
+                                      // Keywords (Neon Green - User Request)
+                                      if (keywords.includes(trimmed)) {
+                                        return <span key={j} style={{ color: '#50fa7b', fontWeight: 600 }}>{token}</span>;
+                                      }
 
-                                  if (valPart.startsWith('"') || valPart.startsWith("'")) {
-                                    const quote = valPart[0];
-                                    const innerStr = valPart.substring(1, valPart.length - (valPart.endsWith(quote) ? 1 : 0));
-                                    const endQuote = valPart.endsWith(quote) ? quote : '';
-                                    valElement = (
-                                      <span>
-                                        <span style={{ color: '#aaaaaa' }}>{quote}</span>
-                                        <span style={{ color: '#cccccc' }}>{innerStr}</span>
-                                        <span style={{ color: '#aaaaaa' }}>{endQuote}</span>
-                                      </span>
-                                    );
-                                  }
-                                  return (
-                                    <div key={i}>
-                                      <span style={{ whiteSpace: 'pre' }}>{indent}</span>
-                                      <span style={{ color: '#ffffff', fontWeight: 'bold' }}>- </span>
-                                      {valElement}
-                                    </div>
-                                  );
-                                }
+                                      // Types (Bright Cyan)
+                                      if (types.includes(trimmed)) {
+                                        return <span key={j} style={{ color: '#8be9fd', fontStyle: 'italic' }}>{token}</span>;
+                                      }
+                                      
+                                      // Numbers (Vibrant Orange)
+                                      if (!isNaN(Number(trimmed)) && trimmed !== '' && !token.includes('"') && !token.includes("'")) {
+                                        return <span key={j} style={{ color: '#ffb86c' }}>{token}</span>;
+                                      }
 
-                                // 3. Key-Value pairs
-                                const colonIndex = line.indexOf(':');
-                                if (colonIndex !== -1) {
-                                  const keyPart = line.substring(0, colonIndex);
-                                  const colonPart = ':';
-                                  const valPart = line.substring(colonIndex + 1);
-                                  const trimmedVal = valPart.trim();
-                                  const valIndentMatch = valPart.match(/^\s*/);
-                                  const valIndent = valIndentMatch ? valIndentMatch[0] : ' ';
+                                      // Strings (Vibrant Yellow)
+                                      if (token.startsWith('"') || token.startsWith("'") || token.endsWith('"') || token.endsWith("'")) {
+                                        return <span key={j} style={{ color: '#f1fa8c' }}>{token}</span>;
+                                      }
 
-                                  let valElement = <span style={{ color: '#e1e1e9' }}>{trimmedVal}</span>;
+                                      // Function calls (Neon Green / Emerald)
+                                      const nextToken = tokens[j+1]?.trim() || '';
+                                      if (/^[a-zA-Z_]\w*$/.test(trimmed) && (nextToken === '(')) {
+                                        return <span key={j} style={{ color: '#50fa7b', fontWeight: 500 }}>{token}</span>;
+                                      }
 
-                                  if (trimmedVal.startsWith('"') || trimmedVal.startsWith("'")) {
-                                    // Strings with separate quote styling
-                                    const quote = trimmedVal[0];
-                                    const innerStr = trimmedVal.substring(1, trimmedVal.length - (trimmedVal.endsWith(quote) ? 1 : 0));
-                                    const endQuote = trimmedVal.endsWith(quote) ? quote : '';
-                                    valElement = (
-                                      <span>
-                                        <span style={{ color: '#fca5a5' }}>{quote}</span>
-                                        <span style={{ color: '#86efac' }}>{innerStr}</span>
-                                        <span style={{ color: '#fca5a5' }}>{endQuote}</span>
-                                      </span>
-                                    );
-                                  } else if (trimmedVal === 'true' || trimmedVal === 'false') {
-                                    // Booleans
-                                    valElement = <span style={{ color: '#ffffff', fontWeight: 500 }}>{trimmedVal}</span>;
-                                  } else if (!isNaN(Number(trimmedVal)) && trimmedVal !== '') {
-                                    // Numbers
-                                    valElement = <span style={{ color: '#bbbbbb' }}>{trimmedVal}</span>;
-                                  } else if (trimmedVal === '') {
-                                    valElement = <span></span>; // empty value (like line with just "schedule:")
-                                  }
+                                      // Property Keys (Vibrant Purple)
+                                      const nextActualToken = tokens.slice(j+1).find(t => t.trim() !== '') || '';
+                                      if (/^[a-zA-Z_]\w*$/.test(trimmed) && nextActualToken === ':') {
+                                        return <span key={j} style={{ color: '#bd93f9' }}>{token}</span>;
+                                      }
 
-                                  return (
-                                    <div key={i}>
-                                      <span style={{ color: '#cccccc', fontWeight: 500 }}>{keyPart}</span>
-                                      <span style={{ color: '#6b7280' }}>{colonPart}</span>
-                                      <span style={{ whiteSpace: 'pre' }}>{valIndent}</span>
-                                      {valElement}
-                                    </div>
-                                  );
-                                }
-                                return <div key={i} style={{ color: '#e1e1e9' }}><span style={{ whiteSpace: 'pre' }}>{indent}</span>{trimmedLine}</div>;
+                                      // Bracing/Operators (Vibrant Pink/Magenta)
+                                      if ([':', '{', '}', '(', ')', '[', ']', '=', '+', '-', '*', '/', ';', ','].includes(trimmed)) {
+                                        return <span key={j} style={{ color: '#ff79c6' }}>{token}</span>;
+                                      }
+
+                                      // Standard text (Silver/White)
+                                      return <span key={j} style={{ color: '#f8f8f2' }}>{token}</span>;
+                                    })}
+                                  </div>
+                                );
                               })
                             )}
                           </pre>
