@@ -10,7 +10,6 @@ interface SidebarRailProps {
 export default function SidebarRail({ onToggleMainSidebar, isMainSidebarOpen }: SidebarRailProps) {
   return (
     <div 
-      className="glass-panel"
       style={{
         width: 'var(--rail-width)',
         height: '100%',
@@ -20,6 +19,7 @@ export default function SidebarRail({ onToggleMainSidebar, isMainSidebarOpen }: 
         padding: '20px 0',
         zIndex: 50,
         gap: '20px',
+        background: 'transparent',
         borderRight: '1px solid var(--border-subtle)',
         borderLeft: 'none',
         borderTop: 'none',

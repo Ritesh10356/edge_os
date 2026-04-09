@@ -20,74 +20,32 @@ const agents: Agent[] = [
 interface SidebarProps {
   activeAgentId: string;
   onSelectAgent: (id: string) => void;
+  isOpen: boolean;
 }
 
-export default function Sidebar({ activeAgentId, onSelectAgent }: SidebarProps) {
+export default function Sidebar({ activeAgentId, onSelectAgent, isOpen }: SidebarProps) {
   return (
     <aside
       className="app-sidebar"
       style={{
-        width: '240px',
-        minWidth: '240px',
-        background: 'rgba(255, 255, 255, 0.015)',
-        backdropFilter: 'var(--glass-blur)',
-        WebkitBackdropFilter: 'var(--glass-blur)',
+        width: isOpen ? '240px' : '0px',
+        minWidth: isOpen ? '240px' : '0px',
+        opacity: isOpen ? 1 : 0,
+        visibility: isOpen ? 'visible' : 'hidden',
+        background: 'transparent',
+        backdropFilter: 'none',
+        WebkitBackdropFilter: 'none',
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
         overflow: 'hidden',
-        borderRight: '1px solid var(--glass-border)',
-        boxShadow: 'var(--shadow-premium)',
+        borderRight: 'none',
+        boxShadow: 'none',
         position: 'relative',
         zIndex: 50,
+        transition: 'var(--transition-smooth)',
       }}
     >
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', padding: '12px 12px' }}>
-
-        <button
-          style={{
-            width: '100%',
-            padding: '10px 14px',
-            background: 'transparent',
-            border: '1px solid transparent',
-            borderRadius: '10px',
-            color: 'var(--text-secondary)',
-            fontSize: '13px',
-            fontWeight: 500,
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '10px',
-            transition: 'var(--transition-smooth)',
-            fontFamily: 'Inter, sans-serif',
-          }}
-          onMouseEnter={e => {
-            (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255, 255, 255, 0.05)';
-            (e.currentTarget as HTMLButtonElement).style.color = 'var(--text-primary)';
-          }}
-          onMouseLeave={e => {
-            (e.currentTarget as HTMLButtonElement).style.background = 'transparent';
-            (e.currentTarget as HTMLButtonElement).style.color = 'var(--text-secondary)';
-          }}
-        >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.7 }}><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-          <span style={{ flex: 1 }}>Search chats</span>
-          <div style={{
-            background: 'var(--accent-red)',
-            color: '#fff',
-            fontSize: '9px',
-            fontWeight: 800,
-            padding: '2px 5px',
-            borderRadius: '4px',
-            letterSpacing: '0.05em',
-            textTransform: 'uppercase',
-            boxShadow: '0 0 10px rgba(255, 59, 48, 0.3)'
-          }}>
-            NEW
-          </div>
-        </button>
-      </div>
-
        {/* Chat History Section */}
       <div className="chat-history-scroll" style={{ flex: 1, overflowY: 'auto', padding: '12px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
         <div style={{ 
@@ -153,18 +111,8 @@ export default function Sidebar({ activeAgentId, onSelectAgent }: SidebarProps) 
           </button>
         </div>
 
-        {/* Tailored To You Banner */}
-        <div style={{ padding: '20px', borderTop: '1px solid var(--border-subtle)', background: 'linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.02))' }}>
-          <h4 style={{ fontSize: '13px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '8px', letterSpacing: '-0.2px' }}>
-            Personalized responses
-          </h4>
-          <p style={{ fontSize: '12px', color: 'var(--text-muted)', lineHeight: 1.5, marginBottom: '16px' }}>
-            Log in to enable personal context, image generation, and file uploads.
-          </p>
-          <button style={{ width: '100%', padding: '10px', background: 'var(--accent-gradient)', border: 'none', borderRadius: '10px', color: '#000', fontSize: '13px', fontWeight: 600, cursor: 'pointer', transition: 'var(--transition-smooth)', boxShadow: '0 4px 15px rgba(255, 255, 255, 0.15)' }} onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(-1px)'; (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 6px 20px rgba(255, 255, 255, 0.25)'; }} onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(0)'; (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 4px 15px rgba(255, 255, 255, 0.15)'; }}>
-            Log in
-          </button>
-        </div>
+        {/* Removed redundant login banner for unified look */}
+        <div style={{ height: '20px' }} />
       </div>
     </aside>
   );

@@ -29,28 +29,24 @@ export default function Home() {
         borderRadius: 0,
       }}
     >
+      <div style={{ display: 'flex', flex: 1, height: '100%', overflow: 'hidden' }}>
+        <Sidebar 
+          activeAgentId={activeAgentId} 
+          onSelectAgent={setActiveAgentId} 
+          isOpen={isSidebarOpen} 
+        />
+        
         <SidebarRail 
           onToggleMainSidebar={() => setIsSidebarOpen(!isSidebarOpen)} 
           isMainSidebarOpen={isSidebarOpen} 
         />
         
-        <div style={{ 
-          display: 'flex', 
-          flex: 1, 
-          height: '100%', 
-          overflow: 'hidden',
-          transition: 'var(--transition-smooth)'
-        }}>
-          {isSidebarOpen && (
-            <Sidebar activeAgentId={activeAgentId} onSelectAgent={setActiveAgentId} />
-          )}
-          
-          <ChatPanel
-            agentName={agentNames[activeAgentId]}
-            onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
-            isSidebarOpen={isSidebarOpen}
-          />
-        </div>
+        <ChatPanel
+          agentName={agentNames[activeAgentId]}
+          onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
+          isSidebarOpen={isSidebarOpen}
+        />
+      </div>
       </div>
   );
 }
