@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Sidebar from './components/Sidebar';
 import ChatPanel from './components/ChatPanel';
-import ConfigPanel from './components/ConfigPanel';
+import SidebarRail from './components/SidebarRail';
 
 const agentNames: Record<string, string> = {
   '1': 'External Meeting Prep Ag...',
@@ -14,7 +14,7 @@ const agentNames: Record<string, string> = {
 
 export default function Home() {
   const [activeAgentId, setActiveAgentId] = useState('1');
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true); // Default to open for new layout
 
   return (
     <div
@@ -26,15 +26,31 @@ export default function Home() {
         overflow: 'hidden',
         position: 'relative',
         zIndex: 1,
-        borderRadius: 0, // Removed rounded corners since it is full edge-to-edge screen
+        borderRadius: 0,
       }}
     >
-        {isSidebarOpen && <Sidebar activeAgentId={activeAgentId} onSelectAgent={setActiveAgentId} />}
-        <ChatPanel
-          agentName={agentNames[activeAgentId]}
-          onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
-          isSidebarOpen={isSidebarOpen}
+        <SidebarRail 
+          onToggleMainSidebar={() => setIsSidebarOpen(!isSidebarOpen)} 
+          isMainSidebarOpen={isSidebarOpen} 
         />
+        
+        <div style={{ 
+          display: 'flex', 
+          flex: 1, 
+          height: '100%', 
+          overflow: 'hidden',
+          transition: 'var(--transition-smooth)'
+        }}>
+          {isSidebarOpen && (
+            <Sidebar activeAgentId={activeAgentId} onSelectAgent={setActiveAgentId} />
+          )}
+          
+          <ChatPanel
+            agentName={agentNames[activeAgentId]}
+            onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
+            isSidebarOpen={isSidebarOpen}
+          />
+        </div>
       </div>
   );
 }

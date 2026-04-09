@@ -42,68 +42,7 @@ export default function Sidebar({ activeAgentId, onSelectAgent }: SidebarProps) 
         zIndex: 50,
       }}
     >
-      {/* Logo */}
-      <div
-        style={{
-          padding: '24px 20px 20px',
-          borderBottom: '1px solid var(--border-subtle)',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '12px',
-        }}
-      >
-        <div
-          style={{
-            width: '32px',
-            height: '32px',
-            borderRadius: '10px',
-            background: 'var(--accent-gradient)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '18px',
-            boxShadow: '0 0 20px rgba(255, 255, 255, 0.30)',
-            flexShrink: 0,
-            color: '#000',
-          }}
-        >
-          ✧
-        </div>
-        <span style={{ fontWeight: 700, fontSize: '17px', color: 'var(--text-primary)', letterSpacing: '-0.5px' }}>
-          Edge-OS
-        </span>
-      </div>
-
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', padding: '16px 12px' }}>
-        <button
-          className="glass-panel"
-          style={{
-            width: '100%',
-            padding: '10px 14px',
-            color: 'var(--text-primary)',
-            fontSize: '13px',
-            fontWeight: 600,
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '10px',
-            transition: 'var(--transition-smooth)',
-            fontFamily: 'Inter, sans-serif',
-          }}
-          onMouseEnter={e => {
-            (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255, 255, 255, 0.08)';
-            (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--border-mid)';
-            (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(-1px)';
-          }}
-          onMouseLeave={e => {
-            (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255, 255, 255, 0.03)';
-            (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--border-subtle)';
-            (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(0)';
-          }}
-        >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.9 }}><path d="M12 20h9"></path><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-          New chat
-        </button>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', padding: '12px 12px' }}>
 
         <button
           style={{
@@ -132,13 +71,39 @@ export default function Sidebar({ activeAgentId, onSelectAgent }: SidebarProps) 
           }}
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.7 }}><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-          Search chats
+          <span style={{ flex: 1 }}>Search chats</span>
+          <div style={{
+            background: 'var(--accent-red)',
+            color: '#fff',
+            fontSize: '9px',
+            fontWeight: 800,
+            padding: '2px 5px',
+            borderRadius: '4px',
+            letterSpacing: '0.05em',
+            textTransform: 'uppercase',
+            boxShadow: '0 0 10px rgba(255, 59, 48, 0.3)'
+          }}>
+            NEW
+          </div>
         </button>
       </div>
 
        {/* Chat History Section */}
       <div className="chat-history-scroll" style={{ flex: 1, overflowY: 'auto', padding: '12px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
-        <div style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-muted)', marginBottom: '6px', marginTop: '12px', padding: '0 10px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+        <div style={{ 
+          fontSize: '11px', 
+          fontWeight: 700, 
+          color: 'var(--text-muted)', 
+          marginBottom: '6px', 
+          marginTop: '12px', 
+          padding: '0 10px', 
+          textTransform: 'uppercase', 
+          letterSpacing: '0.05em',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px'
+        }}>
+          <div style={{ width: '4px', height: '12px', background: 'var(--accent-red)', borderRadius: '2px' }} />
           Today
         </div>
         <button style={{ width: '100%', padding: '10px 12px', background: 'transparent', border: 'none', borderRadius: '10px', color: 'var(--text-secondary)', fontSize: '13px', textAlign: 'left', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', cursor: 'pointer', transition: 'var(--transition-smooth)', fontFamily: 'Inter, sans-serif' }} onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255, 255, 255, 0.04)'; (e.currentTarget as HTMLButtonElement).style.color = 'var(--text-primary)'; }} onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = 'transparent'; (e.currentTarget as HTMLButtonElement).style.color = 'var(--text-secondary)'; }}>
@@ -148,7 +113,20 @@ export default function Sidebar({ activeAgentId, onSelectAgent }: SidebarProps) 
            External Meeting Prep Rules
         </button>
         
-        <div style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-muted)', marginBottom: '6px', marginTop: '20px', padding: '0 10px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+        <div style={{ 
+          fontSize: '11px', 
+          fontWeight: 700, 
+          color: 'var(--text-muted)', 
+          marginBottom: '6px', 
+          marginTop: '20px', 
+          padding: '0 10px', 
+          textTransform: 'uppercase', 
+          letterSpacing: '0.05em',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px'
+        }}>
+          <div style={{ width: '4px', height: '12px', background: 'var(--accent-red)', borderRadius: '2px' }} />
           Previous 7 days
         </div>
         <button style={{ width: '100%', padding: '10px 12px', background: 'transparent', border: 'none', borderRadius: '10px', color: 'var(--text-secondary)', fontSize: '13px', textAlign: 'left', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', cursor: 'pointer', transition: 'var(--transition-smooth)', fontFamily: 'Inter, sans-serif' }} onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255, 255, 255, 0.04)'; (e.currentTarget as HTMLButtonElement).style.color = 'var(--text-primary)'; }} onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = 'transparent'; (e.currentTarget as HTMLButtonElement).style.color = 'var(--text-secondary)'; }}>

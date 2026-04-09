@@ -366,56 +366,82 @@ This configuration initializes the intelligent inference pipeline utilizing the 
           paddingTop: '11px',
         }}
       />
-      <div style={{ display: 'flex', gap: '6px', alignItems: 'center', paddingBottom: '6px' }}>
+      <div style={{ display: 'flex', gap: '8px', alignItems: 'center', paddingBottom: '6px' }}>
+        {/* Voice Microphone Icon */}
         <button
           style={{
             background: 'none',
             border: 'none',
             color: 'var(--text-muted)',
             cursor: 'pointer',
-            fontSize: '16px',
-            padding: '4px',
-            borderRadius: '6px',
+            padding: '6px',
+            borderRadius: '50%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
             transition: 'all 0.2s',
           }}
-          title="Voice input"
-          onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.color = 'var(--accent-light)'; }}
-          onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = 'var(--text-muted)'; }}
+          onMouseEnter={e => {
+            (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255,255,255,0.05)';
+            (e.currentTarget as HTMLButtonElement).style.color = 'var(--text-primary)';
+          }}
+          onMouseLeave={e => {
+            (e.currentTarget as HTMLButtonElement).style.background = 'none';
+            (e.currentTarget as HTMLButtonElement).style.color = 'var(--text-muted)';
+          }}
         >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" x2="12" y1="19" y2="22"></line></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
         </button>
+
+        {/* Headphone/Waveform Icon */}
+        <button
+          style={{
+            background: 'none',
+            border: 'none',
+            color: 'var(--text-muted)',
+            cursor: 'pointer',
+            padding: '6px',
+            borderRadius: '50%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            transition: 'all 0.2s',
+          }}
+          onMouseEnter={e => {
+            (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255,255,255,0.05)';
+            (e.currentTarget as HTMLButtonElement).style.color = 'var(--text-primary)';
+          }}
+          onMouseLeave={e => {
+            (e.currentTarget as HTMLButtonElement).style.background = 'none';
+            (e.currentTarget as HTMLButtonElement).style.color = 'var(--text-muted)';
+          }}
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M12 2v20M17 5v14M7 5v14M2 10v4M22 10v4M14.5 7.5v9M9.5 7.5v9" />
+          </svg>
+        </button>
+
         <button
           onClick={() => handleSend()}
           disabled={!input.trim()}
           style={{
-            width: '34px',
-            height: '34px',
-            background: input.trim() ? 'var(--accent-gradient)' : 'rgba(255, 255, 255, 0.05)',
+            width: '32px',
+            height: '32px',
+            borderRadius: '50%',
+            background: input.trim() ? '#fff' : 'rgba(255, 255, 255, 0.1)',
             border: 'none',
-            borderRadius: '10px',
-            color: input.trim() ? '#fff' : 'var(--text-muted)',
+            color: input.trim() ? '#000' : 'rgba(255, 255, 255, 0.3)',
             cursor: input.trim() ? 'pointer' : 'default',
-            fontSize: '15px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            transition: 'var(--transition-smooth)',
-            boxShadow: input.trim() ? '0 4px 15px var(--accent-glow)' : 'none',
-          }}
-          onMouseEnter={e => {
-            if (input.trim()) {
-              (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(-1px)';
-              (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 6px 20px var(--accent-glow)';
-            }
-          }}
-          onMouseLeave={e => {
-            if (input.trim()) {
-              (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(0)';
-              (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 4px 15px var(--accent-glow)';
-            }
+            transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
           }}
         >
-          ↑
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="12" y1="19" x2="12" y2="5"></line>
+            <polyline points="5 12 12 5 19 12"></polyline>
+          </svg>
         </button>
       </div>
     </div>
@@ -457,54 +483,106 @@ This configuration initializes the intelligent inference pipeline utilizing the 
           gap: '12px',
           background: 'transparent',
           flexShrink: 0,
-          borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
+          borderBottom: 'none',
           zIndex: 10,
         }}
       >
-        <button
-          onClick={onToggleSidebar}
-          style={{
-            background: 'none',
-            border: 'none',
-            color: 'var(--text-muted)',
-            cursor: 'pointer',
-            padding: '6px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            borderRadius: '50%',
-            transition: 'background 0.2s, color 0.2s',
-          }}
-          onMouseEnter={e => {
-            (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255,255,255,0.05)';
-            (e.currentTarget as HTMLButtonElement).style.color = 'var(--text-primary)';
-          }}
-          onMouseLeave={e => {
-            (e.currentTarget as HTMLButtonElement).style.background = 'none';
-            (e.currentTarget as HTMLButtonElement).style.color = 'var(--text-muted)';
-          }}
-          title="Toggle menu"
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <line x1="3" y1="12" x2="21" y2="12"></line>
-            <line x1="3" y1="6" x2="21" y2="6"></line>
-            <line x1="3" y1="18" x2="21" y2="18"></line>
-          </svg>
-        </button>
-        <div style={{ flex: 1 }}>
-          <h2 style={{ fontSize: '15px', fontWeight: 600, color: 'var(--text-primary)', display: 'flex', alignItems: 'center' }}>
+        <div style={{ flex: 1, display: 'flex', alignItems: 'center' }}>
+          <button 
+            style={{ 
+              fontSize: '18px', 
+              fontWeight: 600, 
+              color: 'var(--text-primary)', 
+              display: 'flex', 
+              alignItems: 'center',
+              gap: '6px',
+              background: 'transparent',
+              border: 'none',
+              cursor: 'pointer',
+              padding: '6px 12px',
+              borderRadius: '8px',
+              transition: 'var(--transition-smooth)',
+            }}
+            onMouseEnter={e => {
+              (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255, 255, 255, 0.08)';
+            }}
+            onMouseLeave={e => {
+              (e.currentTarget as HTMLButtonElement).style.background = 'transparent';
+            }}
+          >
             Edge-OS
-          </h2>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginTop: '2px' }}>
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+        </div>
+
+
+
+        {/* Right Side Icons */}
+        <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '12px' }}>
+          <button 
+            style={{
+              padding: '8px 16px',
+              background: 'rgba(255, 255, 255, 0.03)',
+              border: '1px solid rgba(255, 255, 255, 0.1)',
+              borderRadius: '20px',
+              color: 'var(--text-secondary)',
+              fontSize: '13px',
+              fontWeight: 500,
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              transition: 'all 0.2s',
+            }}
+            onMouseEnter={e => {
+              (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255, 255, 255, 0.08)';
+              (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(255, 255, 255, 0.2)';
+              (e.currentTarget as HTMLButtonElement).style.color = 'var(--text-primary)';
+            }}
+            onMouseLeave={e => {
+              (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255, 255, 255, 0.03)';
+              (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(255, 255, 255, 0.1)';
+              (e.currentTarget as HTMLButtonElement).style.color = 'var(--text-secondary)';
+            }}
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
+              <polyline points="16 6 12 2 8 6"></polyline>
+              <line x1="12" y1="2" x2="12" y2="15"></line>
+            </svg>
+            Share
+          </button>
+
+          <button 
+            style={{
+              width: '32px',
+              height: '32px',
+              borderRadius: '50%',
+              background: '#333',
+              color: '#fff',
+              fontSize: '12px',
+              fontWeight: 600,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+              border: 'none',
+            }}
+          >
+            AX
+          </button>
         </div>
       </div>
 
       {messages.length === 0 ? (
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', position: 'relative', zIndex: 5, padding: '0 20px', width: '100%' }}>
-          <h1 style={{ fontSize: '32px', fontWeight: 600, color: '#fff', marginBottom: '8px', letterSpacing: '-0.5px' }}>
-            Welcome back Alex!
+          <h1 style={{ fontSize: '32px', fontWeight: 500, color: 'var(--text-primary)', marginBottom: '8px', letterSpacing: '-0.02em', opacity: 0.9 }}>
+            Ready when you are.
           </h1>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '14px', marginBottom: '40px' }}>
-            What would you like to analyze or build today?
+          <p style={{ color: 'var(--text-muted)', fontSize: '15px', marginBottom: '40px', fontWeight: 400 }}>
+            What can I help you with?
           </p>
 
           <div style={{ width: '100%', maxWidth: '750px', position: 'relative' }}>
