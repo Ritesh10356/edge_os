@@ -450,11 +450,9 @@ This configuration initializes the intelligent inference pipeline utilizing the 
           display: 'flex',
           alignItems: 'center',
           gap: '12px',
-          background: 'var(--bg-header)',
-          backdropFilter: 'var(--glass-blur)',
-          WebkitBackdropFilter: 'var(--glass-blur)',
+          background: 'transparent',
           flexShrink: 0,
-          borderBottom: '1px solid var(--border-subtle)',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
           zIndex: 10,
         }}
       >

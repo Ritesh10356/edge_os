@@ -29,14 +29,12 @@ export default function Sidebar({ activeAgentId, onSelectAgent }: SidebarProps) 
       style={{
         width: '240px',
         minWidth: '240px',
-        background: 'var(--bg-sidebar)',
-        backdropFilter: 'var(--glass-blur)',
-        WebkitBackdropFilter: 'var(--glass-blur)',
+        background: 'transparent',
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
         overflow: 'hidden',
-        borderRight: '1px solid var(--border-subtle)',
+        borderRight: '1px solid rgba(255, 255, 255, 0.05)',
         position: 'relative',
         zIndex: 50,
       }}

@@ -28,8 +28,8 @@ export default function Home() {
       }}
     >
       {isSidebarOpen && <Sidebar activeAgentId={activeAgentId} onSelectAgent={setActiveAgentId} />}
-      <ChatPanel 
-        agentName={agentNames[activeAgentId]} 
+      <ChatPanel
+        agentName={agentNames[activeAgentId]}
         onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
         isSidebarOpen={isSidebarOpen}
       />
