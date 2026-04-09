@@ -59,7 +59,7 @@ export default function Sidebar({ activeAgentId, onSelectAgent }: SidebarProps) 
             alignItems: 'center',
             justifyContent: 'center',
             fontSize: '18px',
-            boxShadow: '0 0 20px rgba(139, 92, 246, 0.4)',
+            boxShadow: '0 0 20px rgba(139, 92, 246, 0.35)',
             flexShrink: 0,
             color: '#fff',
           }}
@@ -182,7 +182,7 @@ export default function Sidebar({ activeAgentId, onSelectAgent }: SidebarProps) 
           <p style={{ fontSize: '12px', color: 'var(--text-muted)', lineHeight: 1.5, marginBottom: '16px' }}>
             Log in to enable personal context, image generation, and file uploads.
           </p>
-          <button style={{ width: '100%', padding: '10px', background: 'var(--accent-gradient)', border: 'none', borderRadius: '10px', color: '#fff', fontSize: '13px', fontWeight: 600, cursor: 'pointer', transition: 'var(--transition-smooth)', boxShadow: '0 4px 15px rgba(124, 58, 237, 0.3)' }} onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(-1px)'; (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 6px 20px rgba(124, 58, 237, 0.4)'; }} onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(0)'; (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 4px 15px rgba(124, 58, 237, 0.3)'; }}>
+          <button style={{ width: '100%', padding: '10px', background: 'var(--accent-gradient)', border: 'none', borderRadius: '10px', color: '#fff', fontSize: '13px', fontWeight: 600, cursor: 'pointer', transition: 'var(--transition-smooth)', boxShadow: '0 4px 15px rgba(124, 58, 237, 0.25)' }} onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(-1px)'; (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 6px 20px rgba(124, 58, 237, 0.35)'; }} onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(0)'; (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 4px 15px rgba(124, 58, 237, 0.25)'; }}>
             Log in
           </button>
         </div>

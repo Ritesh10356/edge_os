@@ -439,9 +439,61 @@ This configuration initializes the intelligent inference pipeline utilizing the 
         position: 'relative',
       }}
     >
-      {/* Background Glowing Orbs */}
-      <div style={{ position: 'absolute', top: '5%', left: '15%', width: '45vw', height: '45vw', background: 'linear-gradient(135deg, rgba(124,58,237,0.15) 0%, rgba(0,0,0,0) 70%)', filter: 'blur(40px)', animation: 'orbFloat 20s infinite alternate ease-in-out', zIndex: 0, pointerEvents: 'none', borderRadius: '50%' }} />
-      <div style={{ position: 'absolute', bottom: '15%', right: '10%', width: '55vw', height: '55vw', background: 'linear-gradient(225deg, rgba(59,130,246,0.12) 0%, rgba(0,0,0,0) 70%)', filter: 'blur(60px)', animation: 'orbFloat 25s infinite alternate-reverse ease-in-out', zIndex: 0, pointerEvents: 'none', borderRadius: '50%' }} />
+      {/* Line Grid Texture — chat area only */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        zIndex: 0,
+        pointerEvents: 'none',
+        opacity: 0.12,
+        backgroundImage: `
+          linear-gradient(rgba(139, 92, 246, 0.3) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(139, 92, 246, 0.3) 1px, transparent 1px)
+        `,
+        backgroundSize: '40px 40px',
+      }} />
+
+      {/* Gradient Glow Patches — matching reference layout */}
+      {/* Top-left glow */}
+      <div style={{
+        position: 'absolute',
+        top: '-5%',
+        left: '-5%',
+        width: '45%',
+        height: '50%',
+        background: 'radial-gradient(ellipse at center, rgba(124, 58, 237, 0.20) 0%, rgba(79, 70, 229, 0.08) 40%, transparent 70%)',
+        filter: 'blur(40px)',
+        zIndex: 0,
+        pointerEvents: 'none',
+        borderRadius: '50%',
+      }} />
+      {/* Top-right glow */}
+      <div style={{
+        position: 'absolute',
+        top: '-8%',
+        right: '-5%',
+        width: '40%',
+        height: '45%',
+        background: 'radial-gradient(ellipse at center, rgba(139, 92, 246, 0.18) 0%, rgba(99, 102, 241, 0.06) 45%, transparent 70%)',
+        filter: 'blur(50px)',
+        zIndex: 0,
+        pointerEvents: 'none',
+        borderRadius: '50%',
+      }} />
+      {/* Bottom horizontal glow bar */}
+      <div style={{
+        position: 'absolute',
+        bottom: '-3%',
+        left: '10%',
+        width: '80%',
+        height: '25%',
+        background: 'radial-gradient(ellipse at center bottom, rgba(124, 58, 237, 0.15) 0%, rgba(79, 70, 229, 0.06) 50%, transparent 80%)',
+        filter: 'blur(45px)',
+        zIndex: 0,
+        pointerEvents: 'none',
+      }} />
+      {/* Subtle aurora sweep */}
+      <div style={{ position: 'absolute', top: '30%', left: '-10%', width: '120%', height: '180px', background: 'linear-gradient(90deg, transparent, rgba(167,139,250,0.04), rgba(99,102,241,0.03), transparent)', filter: 'blur(30px)', animation: 'auroraSweep 15s infinite ease-in-out', zIndex: 0, pointerEvents: 'none' }} />
 
       {/* Chat Header */}
       <div
@@ -553,7 +605,7 @@ This configuration initializes the intelligent inference pipeline utilizing the 
                           fontWeight: 500,
                           color: 'var(--accent-light)',
                           background: 'rgba(124, 58, 237, 0.15)',
-                          border: '1px solid rgba(139, 92, 246, 0.3)',
+                          border: '1px solid rgba(139, 92, 246, 0.30)',
                           borderRadius: '20px',
                           padding: '2px 8px',
                         }}
@@ -570,7 +622,7 @@ This configuration initializes the intelligent inference pipeline utilizing the 
                     padding: '12px 15px',
                     borderRadius: msg.role === 'user' ? '14px 14px 4px 14px' : '4px 14px 14px 14px',
                     background: msg.role === 'user'
-                      ? 'rgba(139, 92, 246, 0.15)'
+                      ? 'rgba(139, 92, 246, 0.12)'
                       : 'rgba(255, 255, 255, 0.03)',
                     border: '1px solid',
                     borderColor: msg.role === 'user'
@@ -592,7 +644,7 @@ This configuration initializes the intelligent inference pipeline utilizing the 
                       style={{
                         marginTop: '16px',
                         background: '#0d0e15',
-                        border: '1px solid rgba(139, 92, 246, 0.25)',
+                        border: '1px solid rgba(139, 92, 246, 0.20)',
                         borderRadius: '10px',
                         overflow: 'hidden',
                         boxShadow: '0 8px 30px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255,255,255,0.05)',
@@ -601,13 +653,13 @@ This configuration initializes the intelligent inference pipeline utilizing the 
                       <div style={{
                         padding: '8px 14px',
                         background: 'rgba(124, 58, 237, 0.08)',
-                        borderBottom: '1px solid rgba(139, 92, 246, 0.2)',
+                        borderBottom: '1px solid rgba(139, 92, 246, 0.15)',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'space-between',
                       }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9b6bfb" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                             <polyline points="14 2 14 8 20 8"></polyline>
                             <line x1="16" y1="13" x2="8" y2="13"></line>
@@ -622,8 +674,8 @@ This configuration initializes the intelligent inference pipeline utilizing the 
                               <button
                                 onClick={() => setMarkdownMode(prev => ({ ...prev, [msg.id]: 'code' }))}
                                 style={{
-                                  background: markdownMode[msg.id] === 'code' ? 'rgba(139, 92, 246, 0.2)' : 'transparent',
-                                  border: markdownMode[msg.id] === 'code' ? '1px solid rgba(139,92,246,0.3)' : '1px solid transparent',
+                                  background: markdownMode[msg.id] === 'code' ? 'rgba(139, 92, 246, 0.18)' : 'transparent',
+                                  border: markdownMode[msg.id] === 'code' ? '1px solid rgba(139,92,246,0.30)' : '1px solid transparent',
                                   color: markdownMode[msg.id] === 'code' ? '#fff' : 'var(--text-muted)',
                                   fontSize: '11px', padding: '3px 10px', borderRadius: '4px', cursor: 'pointer', transition: 'all 0.2s', fontWeight: 600
                                 }}
@@ -631,8 +683,8 @@ This configuration initializes the intelligent inference pipeline utilizing the 
                               <button
                                 onClick={() => setMarkdownMode(prev => ({ ...prev, [msg.id]: 'preview' }))}
                                 style={{
-                                  background: markdownMode[msg.id] !== 'code' ? 'rgba(139, 92, 246, 0.2)' : 'transparent',
-                                  border: markdownMode[msg.id] !== 'code' ? '1px solid rgba(139,92,246,0.3)' : '1px solid transparent',
+                                  background: markdownMode[msg.id] !== 'code' ? 'rgba(139, 92, 246, 0.18)' : 'transparent',
+                                  border: markdownMode[msg.id] !== 'code' ? '1px solid rgba(139,92,246,0.30)' : '1px solid transparent',
                                   color: markdownMode[msg.id] !== 'code' ? '#fff' : 'var(--text-muted)',
                                   fontSize: '11px', padding: '3px 10px', borderRadius: '4px', cursor: 'pointer', transition: 'all 0.2s', fontWeight: 600
                                 }}
@@ -644,8 +696,8 @@ This configuration initializes the intelligent inference pipeline utilizing the 
                           <button
                             style={{
                               background: 'transparent',
-                              border: '1px solid rgba(139, 92, 246, 0.3)',
-                              color: '#9b6bfb',
+                              border: '1px solid rgba(139, 92, 246, 0.30)',
+                              color: '#a78bfa',
                               fontSize: '11px',
                               display: 'flex',
                               alignItems: 'center',
@@ -658,11 +710,11 @@ This configuration initializes the intelligent inference pipeline utilizing the 
                             }}
                             onMouseEnter={e => {
                               (e.currentTarget as HTMLButtonElement).style.background = 'rgba(124, 58, 237, 0.15)';
-                              (e.currentTarget as HTMLButtonElement).style.color = '#b18dfc';
+                              (e.currentTarget as HTMLButtonElement).style.color = '#c4b5fd';
                             }}
                             onMouseLeave={e => {
                               (e.currentTarget as HTMLButtonElement).style.background = 'transparent';
-                              (e.currentTarget as HTMLButtonElement).style.color = '#9b6bfb';
+                              (e.currentTarget as HTMLButtonElement).style.color = '#a78bfa';
                             }}
                             onClick={() => navigator.clipboard.writeText(msg.file!.content)}
                           >
@@ -674,15 +726,15 @@ This configuration initializes the intelligent inference pipeline utilizing the 
                           </button>
                         )}
                       </div>
-                      <div style={{ padding: msg.file.language === 'pipeline' ? '24px' : '16px', overflowX: 'auto', background: '#0a0b10' }}>
+                      <div style={{ padding: msg.file.language === 'pipeline' ? '24px' : '16px', overflowX: 'auto', background: '#0a0b12' }}>
                         {msg.file.language === 'image' ? (
                           <div style={{ display: 'flex', justifyContent: 'center' }}>
-                            <img src={msg.file.content} alt={msg.file.name} style={{ maxWidth: '100%', maxHeight: '400px', objectFit: 'contain', borderRadius: '6px', border: '1px solid rgba(139, 92, 246, 0.2)' }} />
+                            <img src={msg.file.content} alt={msg.file.name} style={{ maxWidth: '100%', maxHeight: '400px', objectFit: 'contain', borderRadius: '6px', border: '1px solid rgba(139, 92, 246, 0.15)' }} />
                           </div>
                         ) : msg.file.language === 'pipeline' ? (
                           <div style={{ fontFamily: 'Inter, sans-serif' }}>
                             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', marginBottom: '28px' }}>
-                              <div style={{ padding: '8px 14px', border: '1px solid rgba(139, 92, 246, 0.3)', borderRadius: '6px' }}>
+                              <div style={{ padding: '8px 14px', border: '1px solid rgba(139, 92, 246, 0.25)', borderRadius: '6px' }}>
                                 <div style={{ fontSize: '9px', color: '#6b7280', fontWeight: 700, letterSpacing: '1px', marginBottom: '4px' }}>PIPELINE</div>
                                 <div style={{ fontSize: '13px', color: '#e1e1e9', fontWeight: 600 }}>retail-footfall-tracking</div>
                               </div>
@@ -759,7 +811,7 @@ This configuration initializes the intelligent inference pipeline utilizing the 
                                 // Preview mode
                                 msg.file.content.split('\n').map((line, i) => {
                                   const tLine = line.trim();
-                                  if (tLine.startsWith('# ')) return <div key={i} style={{ color: '#9b6bfb', fontSize: '1.4em', fontWeight: 'bold', marginTop: '14px', marginBottom: '8px' }}>{tLine.substring(2)}</div>;
+                                  if (tLine.startsWith('# ')) return <div key={i} style={{ color: '#a78bfa', fontSize: '1.4em', fontWeight: 'bold', marginTop: '14px', marginBottom: '8px' }}>{tLine.substring(2)}</div>;
                                   if (tLine.startsWith('## ')) return <div key={i} style={{ color: '#a5d6ff', fontSize: '1.15em', fontWeight: 'bold', marginTop: '12px', marginBottom: '6px' }}>{tLine.substring(3)}</div>;
                                   if (tLine.startsWith('- ')) return <div key={i} style={{ color: '#e1e1e9', marginLeft: '14px', marginBottom: '4px' }}><span style={{ color: '#e3b341', marginRight: '6px' }}>•</span>{tLine.substring(2)}</div>;
                                   if (tLine.startsWith('1.') || tLine.startsWith('2.') || tLine.startsWith('3.')) return <div key={i} style={{ color: '#e1e1e9', marginLeft: '14px', marginBottom: '4px' }}><span style={{ color: '#fca5a5', marginRight: '6px', fontWeight: 'bold' }}>{tLine.substring(0, 2)}</span>{tLine.substring(2)}</div>;
@@ -839,7 +891,7 @@ This configuration initializes the intelligent inference pipeline utilizing the 
 
                                   return (
                                     <div key={i}>
-                                      <span style={{ color: '#9b6bfb', fontWeight: 500 }}>{keyPart}</span>
+                                      <span style={{ color: '#a78bfa', fontWeight: 500 }}>{keyPart}</span>
                                       <span style={{ color: '#6b7280' }}>{colonPart}</span>
                                       <span style={{ whiteSpace: 'pre' }}>{valIndent}</span>
                                       {valElement}
@@ -865,23 +917,23 @@ This configuration initializes the intelligent inference pipeline utilizing the 
                         onClick={() => handleSend(option)}
                         style={{
                           padding: '8px 16px',
-                          background: 'rgba(124, 58, 237, 0.1)',
-                          border: '1px solid rgba(139, 92, 246, 0.4)',
+                          background: 'rgba(124, 58, 237, 0.10)',
+                          border: '1px solid rgba(139, 92, 246, 0.35)',
                           borderRadius: '8px',
-                          color: '#b18dfc',
+                          color: '#c4b5fd',
                           fontSize: '13px',
                           fontWeight: 500,
                           cursor: 'pointer',
                           transition: 'all 0.2s',
                         }}
                         onMouseEnter={e => {
-                          (e.currentTarget as HTMLButtonElement).style.background = 'rgba(124, 58, 237, 0.25)';
-                          (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(139, 92, 246, 0.6)';
+                          (e.currentTarget as HTMLButtonElement).style.background = 'rgba(124, 58, 237, 0.22)';
+                          (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(139, 92, 246, 0.55)';
                           (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(-1px)';
                         }}
                         onMouseLeave={e => {
-                          (e.currentTarget as HTMLButtonElement).style.background = 'rgba(124, 58, 237, 0.1)';
-                          (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(139, 92, 246, 0.4)';
+                          (e.currentTarget as HTMLButtonElement).style.background = 'rgba(124, 58, 237, 0.10)';
+                          (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(139, 92, 246, 0.35)';
                           (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(0)';
                         }}
                       >
@@ -904,7 +956,7 @@ This configuration initializes the intelligent inference pipeline utilizing the 
                   style={{
                     padding: '12px 16px',
                     borderRadius: '4px 14px 14px 14px',
-                    background: 'rgba(26, 24, 48, 0.8)',
+                    background: 'rgba(14, 12, 38, 0.85)',
                     border: '1px solid var(--border-subtle)',
                     display: 'flex',
                     gap: '5px',
