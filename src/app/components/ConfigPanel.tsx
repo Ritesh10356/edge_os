@@ -21,10 +21,12 @@ const configSteps: Step[] = [
 ];
 
 const tools = [
-  { id: '1', name: 'Copilot', icon: '✦', color: '#7c3aed' },
-  { id: '2', name: 'Google Calendar', icon: '📅', color: '#4f46e5' },
-  { id: '3', name: 'Slack', icon: '💬', color: '#10b981' },
-  { id: '4', name: 'Web Search', icon: '🔍', color: '#f59e0b' },
+  { id: '1', name: 'Copilot', icon: '✦', color: '#ffffff' },
+  { id: '2', name: 'Google Calendar', icon: '📅', color: '#dddddd' },
+  { id: '3', name: 'Slack', icon: '💬', color: '#cccccc' },
+  { id: '4', name: 'Web Search', icon: '🔍', color: '#bbbbbb' },
+  { id: '5', name: 'Read Website', icon: '🌐', color: '#bbbbbb' },
+  { id: '6', name: 'File Reader', icon: '📁', color: '#bbbbbb' },
 ];
 
 const activityLog = [
@@ -142,7 +144,7 @@ export default function ConfigPanel({ agentName }: ConfigPanelProps) {
                     fontFamily: 'Inter, sans-serif',
                     transition: 'all 0.2s',
                   }}
-                  onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(139, 92, 246, 0.5)'; }}
+                  onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(255, 255, 255, 0.3)'; }}
                   onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--border-mid)'; }}
                 >
                   ✏️ Edit trigger
@@ -183,7 +185,7 @@ export default function ConfigPanel({ agentName }: ConfigPanelProps) {
                 <button
                   style={{
                     padding: '4px 10px',
-                    background: 'rgba(124, 58, 237, 0.12)',
+                    background: 'rgba(255, 255, 255, 0.1)',
                     border: '1px solid var(--border-mid)',
                     borderRadius: '6px',
                     color: 'var(--accent-light)',
@@ -221,7 +223,7 @@ export default function ConfigPanel({ agentName }: ConfigPanelProps) {
                           width: '18px',
                           height: '18px',
                           borderRadius: '50%',
-                          background: step.done ? '#10b981' : 'rgba(124, 58, 237, 0.15)',
+                          background: step.done ? '#444444' : 'rgba(255, 255, 255, 0.15)',
                           border: step.done ? 'none' : '1px solid var(--border-mid)',
                           color: step.done ? '#fff' : 'var(--text-muted)',
                           fontSize: '9px',
