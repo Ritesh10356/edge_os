@@ -307,7 +307,6 @@ This configuration initializes the intelligent inference pipeline utilizing the 
         alignItems: 'flex-end',
         gap: '12px',
         transition: 'var(--transition-smooth)',
-        transition: 'var(--transition-smooth)',
       }}
       onFocus={e => { 
         e.currentTarget.style.borderColor = 'var(--accent-light)'; 
