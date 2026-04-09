@@ -511,9 +511,6 @@ This configuration initializes the intelligent inference pipeline utilizing the 
             }}
           >
             Edge-OS
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginTop: '2px' }}>
-              <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
           </button>
         </div>
 
@@ -557,21 +554,26 @@ This configuration initializes the intelligent inference pipeline utilizing the 
 
           <button 
             style={{
-              width: '32px',
-              height: '32px',
-              borderRadius: '50%',
-              background: '#333',
-              color: '#fff',
-              fontSize: '12px',
-              fontWeight: 600,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer',
+              padding: '8px 16px',
+              background: 'var(--accent-primary)',
+              color: '#000',
               border: 'none',
+              borderRadius: '20px',
+              fontSize: '13px',
+              fontWeight: 700,
+              cursor: 'pointer',
+              transition: 'all 0.2s',
+            }}
+            onMouseEnter={e => {
+              (e.currentTarget as HTMLButtonElement).style.opacity = '0.9';
+              (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(-1px)';
+            }}
+            onMouseLeave={e => {
+              (e.currentTarget as HTMLButtonElement).style.opacity = '1';
+              (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(0)';
             }}
           >
-            AX
+            Log in
           </button>
         </div>
       </div>

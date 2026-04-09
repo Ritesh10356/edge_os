@@ -113,22 +113,28 @@ export default function SidebarRail({ onToggleMainSidebar, isMainSidebarOpen }: 
       {/* Bottom Profile */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', alignItems: 'center' }}>
         <button 
+          title="Log in"
           style={{
             width: '36px',
             height: '36px',
-            borderRadius: '50%',
-            background: '#333',
-            color: '#fff',
-            fontSize: '11px',
-            fontWeight: 700,
+            borderRadius: '12px',
+            background: 'var(--accent-primary)',
+            color: '#000',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             cursor: 'pointer',
             border: 'none',
+            transition: 'all 0.2s',
           }}
+          onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.opacity = '0.9'; }}
+          onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.opacity = '1'; }}
         >
-          AX
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+            <polyline points="10 17 15 12 10 7"></polyline>
+            <line x1="15" y1="12" x2="3" y2="12"></line>
+          </svg>
         </button>
       </div>
     </div>
