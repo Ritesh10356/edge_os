@@ -850,58 +850,79 @@ This configuration initializes the intelligent inference pipeline utilizing the 
                           </div>
                         ) : msg.file.language === 'pipeline' ? (
                           <div style={{ fontFamily: 'Inter, sans-serif' }}>
-                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', marginBottom: '28px' }}>
-                              <div style={{ padding: '8px 14px', border: '1px solid rgba(255, 255, 255, 0.2)', borderRadius: '6px' }}>
-                                <div style={{ fontSize: '9px', color: '#6b7280', fontWeight: 700, letterSpacing: '1px', marginBottom: '4px' }}>PIPELINE</div>
-                                <div style={{ fontSize: '13px', color: '#e1e1e9', fontWeight: 600 }}>retail-footfall-tracking</div>
+                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', marginBottom: '32px' }}>
+                              <div style={{ padding: '10px 16px', border: '1px solid rgba(124, 58, 237, 0.4)', background: 'rgba(124, 58, 237, 0.05)', borderRadius: '10px' }}>
+                                <div style={{ fontSize: '9px', color: '#a78bfa', fontWeight: 800, letterSpacing: '1.2px', marginBottom: '4px' }}>PIPELINE</div>
+                                <div style={{ fontSize: '14px', color: '#ffffff', fontWeight: 600 }}>retail-footfall-tracking</div>
                               </div>
-                              <div style={{ padding: '8px 14px', border: '1px solid rgba(255, 255, 255, 0.2)', borderRadius: '6px' }}>
-                                <div style={{ fontSize: '9px', color: '#888888', fontWeight: 700, letterSpacing: '1px', marginBottom: '4px' }}>TRIGGER</div>
-                                <div style={{ fontSize: '13px', color: '#cccccc', fontWeight: 600 }}>continuous</div>
+                              <div style={{ padding: '10px 16px', border: '1px solid rgba(16, 185, 129, 0.4)', background: 'rgba(16, 185, 129, 0.05)', borderRadius: '10px' }}>
+                                <div style={{ fontSize: '9px', color: '#34d399', fontWeight: 800, letterSpacing: '1.2px', marginBottom: '4px' }}>TRIGGER</div>
+                                <div style={{ fontSize: '14px', color: '#ffffff', fontWeight: 600 }}>continuous</div>
                               </div>
-                              <div style={{ padding: '8px 14px', border: '1px solid rgba(156, 163, 175, 0.2)', borderRadius: '6px' }}>
-                                <div style={{ fontSize: '9px', color: '#6b7280', fontWeight: 700, letterSpacing: '1px', marginBottom: '4px' }}>VERSION</div>
-                                <div style={{ fontSize: '13px', color: '#9ca3af', fontWeight: 600 }}>1.0.0</div>
+                              <div style={{ padding: '10px 16px', border: '1px solid rgba(245, 158, 11, 0.4)', background: 'rgba(245, 158, 11, 0.05)', borderRadius: '10px' }}>
+                                <div style={{ fontSize: '9px', color: '#fbbf24', fontWeight: 800, letterSpacing: '1.2px', marginBottom: '4px' }}>VERSION</div>
+                                <div style={{ fontSize: '14px', color: '#ffffff', fontWeight: 600 }}>1.0.0</div>
                               </div>
                             </div>
 
-                            <div style={{ fontSize: '10px', color: '#6b7280', fontWeight: 700, letterSpacing: '1px', marginBottom: '16px' }}>DATA FLOW</div>
+                            <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: 800, letterSpacing: '1.5px', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                              <div style={{ height: '1px', flex: 1, background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.1))' }}></div>
+                              DATA FLOW
+                              <div style={{ height: '1px', flex: 1, background: 'linear-gradient(90deg, rgba(255,255,255,0.1), transparent)' }}></div>
+                            </div>
 
-                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center', marginBottom: '32px' }}>
+                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', alignItems: 'center', marginBottom: '40px' }}>
                               {(msg.file.content.includes('[') ? JSON.parse(msg.file.content) : []).map((node: any, index: number, arr: any[]) => (
                                 <React.Fragment key={node.id}>
                                   <div style={{
-                                    padding: '12px 16px',
-                                    border: '1px solid ' + node.color + '40',
-                                    borderRadius: '8px',
-                                    background: 'rgba(255,255,255,0.02)',
+                                    padding: '16px 20px',
+                                    border: '1px solid ' + node.color + '60',
+                                    borderRadius: '12px',
+                                    background: node.color + '08',
                                     display: 'flex',
                                     alignItems: 'center',
-                                    gap: '14px',
-                                    minWidth: '240px'
-                                  }}>
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={node.color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                      {node.icon === 'video' && <><path d="M23 7l-7 5 7 5V7z"></path><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></>}
-                                      {node.icon === 'refresh' && <><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></>}
-                                      {node.icon === 'target' && <><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="12" cy="12" r="3"></circle></>}
-                                      {node.icon === 'database' && <><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></>}
-                                      {node.icon === 'bell' && <><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></>}
-                                    </svg>
+                                    gap: '16px',
+                                    minWidth: '260px',
+                                    position: 'relative',
+                                    boxShadow: `0 0 20px -10px ${node.color}40`,
+                                    transition: 'transform 0.2s',
+                                  }}
+                                  onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.background = node.color + '12'; }}
+                                  onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.background = node.color + '08'; }}
+                                  >
+                                    <div style={{ 
+                                      width: '36px', 
+                                      height: '36px', 
+                                      borderRadius: '10px', 
+                                      background: node.color + '20', 
+                                      display: 'flex', 
+                                      alignItems: 'center', 
+                                      justifyContent: 'center',
+                                      color: node.color
+                                    }}>
+                                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                        {node.icon === 'video' && <><path d="M23 7l-7 5 7 5V7z"></path><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></>}
+                                        {node.icon === 'refresh' && <><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></>}
+                                        {node.icon === 'target' && <><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="12" cy="12" r="3"></circle></>}
+                                        {node.icon === 'database' && <><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></>}
+                                        {node.icon === 'bell' && <><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></>}
+                                      </svg>
+                                    </div>
                                     <div>
-                                      <div style={{ fontSize: '9px', color: node.color, fontWeight: 700, letterSpacing: '0.5px', textTransform: 'uppercase', marginBottom: '4px' }}>
-                                        {node.id} <span style={{ opacity: 0.6, marginLeft: '4px' }}>{node.type}</span>
+                                      <div style={{ fontSize: '10px', color: node.color, fontWeight: 800, letterSpacing: '0.8px', textTransform: 'uppercase', marginBottom: '4px', opacity: 0.9 }}>
+                                        {node.id} <span style={{ opacity: 0.5, marginLeft: '6px' }}>• {node.type}</span>
                                       </div>
-                                      <div style={{ fontSize: '13px', color: '#e1e1e9', fontWeight: 600 }}>
+                                      <div style={{ fontSize: '14px', color: '#ffffff', fontWeight: 600 }}>
                                         {node.title}
                                       </div>
                                       {node.sub && (
-                                        <div style={{ fontSize: '11px', color: '#6b7280', marginTop: '2px' }}>{node.sub}</div>
+                                        <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', marginTop: '2px' }}>{node.sub}</div>
                                       )}
                                     </div>
                                   </div>
                                   {index < arr.length - 1 && (
-                                    <div style={{ color: '#4b5563' }}>
-                                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                    <div style={{ color: 'rgba(255,255,255,0.15)', display: 'flex', alignItems: 'center' }}>
+                                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                                         <line x1="5" y1="12" x2="19" y2="12"></line>
                                         <polyline points="12 5 19 12 12 19"></polyline>
                                       </svg>
