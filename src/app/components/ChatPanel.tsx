@@ -219,9 +219,9 @@ This configuration initializes the intelligent inference pipeline utilizing the 
           };
         } else {
           aiMsg = {
-             id: (Date.now() + 1).toString(), role: 'assistant', 
-             content: "All files have been successfully generated for this workflow! If you need anything else, just let me know.", 
-             timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+            id: (Date.now() + 1).toString(), role: 'assistant',
+            content: "All files have been successfully generated for this workflow! If you need anything else, just let me know.",
+            timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
           };
         }
       } else if (isImprove) {
@@ -279,7 +279,7 @@ This configuration initializes the intelligent inference pipeline utilizing the 
       }
 
       setMessages(prev => [...prev, aiMsg]);
-      
+
       setIsTyping(false);
     }, 1800);
   };
@@ -301,24 +301,53 @@ This configuration initializes the intelligent inference pipeline utilizing the 
   const renderInputArea = () => (
     <div
       style={{
-        background: 'rgba(14, 10, 35, 0.55)',
-        border: '1px solid rgba(139, 92, 246, 0.25)',
-        borderRadius: '12px',
-        padding: '10px 14px',
+        background: 'var(--bg-input)',
+        border: '1px solid var(--border-subtle)',
+        borderRadius: '16px',
+        padding: '12px 16px',
         display: 'flex',
         alignItems: 'flex-end',
-        gap: '10px',
-        backdropFilter: 'blur(20px)',
-        WebkitBackdropFilter: 'blur(20px)',
-        boxShadow: '0 4px 30px rgba(0, 0, 0, 0.2)',
-        transition: 'border-color 0.2s, box-shadow 0.2s',
+        gap: '12px',
+        backdropFilter: 'var(--glass-blur)',
+        WebkitBackdropFilter: 'var(--glass-blur)',
+        boxShadow: 'var(--shadow-premium)',
+        transition: 'var(--transition-smooth)',
       }}
-      onFocus={e => { e.currentTarget.style.borderColor = 'rgba(124, 58, 237, 0.6)'; e.currentTarget.style.boxShadow = '0 0 20px rgba(124, 58, 237, 0.15)'; }}
-      onBlur={e => { e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.25)'; e.currentTarget.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.2)'; }}
+      onFocus={e => { 
+        e.currentTarget.style.borderColor = 'var(--accent-light)'; 
+        e.currentTarget.style.boxShadow = '0 0 25px var(--accent-glow)'; 
+      }}
+      onBlur={e => { 
+        e.currentTarget.style.borderColor = 'var(--border-subtle)'; 
+        e.currentTarget.style.boxShadow = 'var(--shadow-premium)'; 
+      }}
     >
-      <div style={{ paddingBottom: '6px', cursor: 'pointer', color: 'var(--text-muted)' }}>
-         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 5v14M5 12h14"/></svg>
-      </div>
+      <button
+        style={{
+          background: 'none',
+          border: 'none',
+          color: 'var(--text-muted)',
+          cursor: 'pointer',
+          padding: '4px',
+          borderRadius: '6px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          transition: 'all 0.2s',
+          marginBottom: '6px',
+        }}
+        onMouseEnter={e => {
+          (e.currentTarget as HTMLButtonElement).style.color = 'var(--accent-light)';
+          (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255,255,255,0.05)';
+        }}
+        onMouseLeave={e => {
+          (e.currentTarget as HTMLButtonElement).style.color = 'var(--text-muted)';
+          (e.currentTarget as HTMLButtonElement).style.background = 'none';
+        }}
+        title="Upload file (Coming soon)"
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 5v14M5 12h14" /></svg>
+      </button>
       <textarea
         ref={textareaRef}
         value={input}
@@ -366,18 +395,29 @@ This configuration initializes the intelligent inference pipeline utilizing the 
           style={{
             width: '34px',
             height: '34px',
-            background: input.trim() ? 'var(--gradient-purple)' : 'rgba(124, 58, 237, 0.1)',
-            border: '1px solid',
-            borderColor: input.trim() ? 'transparent' : 'var(--border-subtle)',
-            borderRadius: '8px',
+            background: input.trim() ? 'var(--accent-gradient)' : 'rgba(139, 92, 246, 0.08)',
+            border: 'none',
+            borderRadius: '10px',
             color: input.trim() ? '#fff' : 'var(--text-muted)',
             cursor: input.trim() ? 'pointer' : 'default',
-            fontSize: '14px',
+            fontSize: '15px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            transition: 'all 0.2s',
-            boxShadow: input.trim() ? '0 0 12px rgba(124, 58, 237, 0.4)' : 'none',
+            transition: 'var(--transition-smooth)',
+            boxShadow: input.trim() ? '0 4px 15px var(--accent-glow)' : 'none',
+          }}
+          onMouseEnter={e => {
+            if (input.trim()) {
+              (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(-1px)';
+              (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 6px 20px var(--accent-glow)';
+            }
+          }}
+          onMouseLeave={e => {
+            if (input.trim()) {
+              (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(0)';
+              (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 4px 15px var(--accent-glow)';
+            }
           }}
         >
           ↑
@@ -406,15 +446,15 @@ This configuration initializes the intelligent inference pipeline utilizing the 
       {/* Chat Header */}
       <div
         style={{
-          padding: '14px 20px',
+          padding: '16px 24px',
           display: 'flex',
           alignItems: 'center',
-          gap: '10px',
-          background: 'rgba(10, 8, 25, 0.4)',
-          backdropFilter: 'blur(20px)',
-          WebkitBackdropFilter: 'blur(20px)',
+          gap: '12px',
+          background: 'var(--bg-header)',
+          backdropFilter: 'var(--glass-blur)',
+          WebkitBackdropFilter: 'var(--glass-blur)',
           flexShrink: 0,
-          borderBottom: '1px solid rgba(139, 92, 246, 0.1)',
+          borderBottom: '1px solid var(--border-subtle)',
           zIndex: 10,
         }}
       >
@@ -450,16 +490,8 @@ This configuration initializes the intelligent inference pipeline utilizing the 
         </button>
         <div style={{ flex: 1 }}>
           <h2 style={{ fontSize: '15px', fontWeight: 600, color: 'var(--text-primary)', display: 'flex', alignItems: 'center' }}>
-            Edge-OS <span style={{ opacity: 0.5, fontSize: '10px', marginLeft: '6px', marginTop: '2px' }}>▼</span>
+            Edge-OS
           </h2>
-        </div>
-        <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-          <button style={{ background: '#fff', color: '#111', padding: '8px 16px', borderRadius: '20px', fontWeight: 600, fontSize: '13px', border: 'none', cursor: 'pointer', transition: 'opacity 0.2s' }} onMouseEnter={e => (e.currentTarget.style.opacity = '0.9')} onMouseLeave={e => (e.currentTarget.style.opacity = '1')}>
-            Log in
-          </button>
-          <button style={{ background: 'transparent', color: '#fff', padding: '8px 16px', borderRadius: '20px', fontWeight: 600, fontSize: '13px', border: '1px solid rgba(255,255,255,0.2)', cursor: 'pointer', transition: 'background 0.2s' }} onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.1)')} onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}>
-            Sign up for free
-          </button>
         </div>
       </div>
 
@@ -482,432 +514,446 @@ This configuration initializes the intelligent inference pipeline utilizing the 
             style={{
               flex: 1,
               overflowY: 'auto',
-              padding: '20px',
               display: 'flex',
               flexDirection: 'column',
-              gap: '4px',
               position: 'relative',
               zIndex: 5,
             }}
           >
-
-        {messages.map((msg, idx) => (
-          <div
-            key={msg.id}
-            className="animate-fade-in-up"
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: msg.role === 'user' ? 'flex-end' : 'flex-start',
-              marginBottom: '10px',
-              animationDelay: `${idx * 0.05}s`,
-            }}
-          >
-            {msg.tools && (
-              <div style={{ display: 'flex', gap: '6px', marginBottom: '6px', flexWrap: 'wrap' }}>
-                {msg.tools.map(tool => (
-                  <span
-                    key={tool}
-                    style={{
-                      fontSize: '10px',
-                      fontWeight: 500,
-                      color: 'var(--accent-light)',
-                      background: 'rgba(124, 58, 237, 0.15)',
-                      border: '1px solid rgba(139, 92, 246, 0.3)',
-                      borderRadius: '20px',
-                      padding: '2px 8px',
-                    }}
-                  >
-                    🔧 {tool}
-                  </span>
-                ))}
-              </div>
-            )}
-
             <div
               style={{
-                maxWidth: '88%',
-                padding: '12px 15px',
-                borderRadius: msg.role === 'user' ? '14px 14px 4px 14px' : '4px 14px 14px 14px',
-                background: msg.role === 'user'
-                  ? 'rgba(124, 58, 237, 0.18)'
-                  : 'rgba(26, 24, 48, 0.65)',
-                border: msg.role === 'user'
-                  ? '1px solid rgba(124, 58, 237, 0.4)'
-                  : '1px solid rgba(150, 130, 255, 0.15)',
-                backdropFilter: 'blur(10px)',
-                WebkitBackdropFilter: 'blur(10px)',
-                color: 'var(--text-primary)',
-                fontSize: '13px',
-                lineHeight: '1.65',
-                whiteSpace: 'pre-line',
+                maxWidth: '850px',
+                width: '100%',
+                margin: '0 auto',
+                padding: '20px',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '4px',
+                flex: 1,
               }}
             >
-              {msg.content}
-              
-              {/* YAML File Rendering */}
-              {msg.file && (
+
+            {messages.map((msg, idx) => (
+              <div
+                key={msg.id}
+                className="animate-fade-in-up"
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: msg.role === 'user' ? 'flex-end' : 'flex-start',
+                  marginBottom: '10px',
+                  animationDelay: `${idx * 0.05}s`,
+                }}
+              >
+                {msg.tools && (
+                  <div style={{ display: 'flex', gap: '6px', marginBottom: '6px', flexWrap: 'wrap' }}>
+                    {msg.tools.map(tool => (
+                      <span
+                        key={tool}
+                        style={{
+                          fontSize: '10px',
+                          fontWeight: 500,
+                          color: 'var(--accent-light)',
+                          background: 'rgba(124, 58, 237, 0.15)',
+                          border: '1px solid rgba(139, 92, 246, 0.3)',
+                          borderRadius: '20px',
+                          padding: '2px 8px',
+                        }}
+                      >
+                        🔧 {tool}
+                      </span>
+                    ))}
+                  </div>
+                )}
+
                 <div
                   style={{
-                    marginTop: '16px',
-                    background: '#0d0e15',
-                    border: '1px solid rgba(139, 92, 246, 0.25)',
-                    borderRadius: '10px',
-                    overflow: 'hidden',
-                    boxShadow: '0 8px 30px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255,255,255,0.05)',
+                    maxWidth: '88%',
+                    padding: '12px 15px',
+                    borderRadius: msg.role === 'user' ? '14px 14px 4px 14px' : '4px 14px 14px 14px',
+                    background: msg.role === 'user'
+                      ? 'rgba(139, 92, 246, 0.15)'
+                      : 'rgba(255, 255, 255, 0.03)',
+                    border: '1px solid',
+                    borderColor: msg.role === 'user'
+                      ? 'var(--accent-light)'
+                      : 'var(--border-subtle)',
+                    backdropFilter: 'var(--glass-blur)',
+                    WebkitBackdropFilter: 'var(--glass-blur)',
+                    color: 'var(--text-primary)',
+                    fontSize: '13px',
+                    lineHeight: '1.65',
+                    whiteSpace: 'pre-line',
                   }}
                 >
-                  <div style={{
-                    padding: '8px 14px',
-                    background: 'rgba(124, 58, 237, 0.08)',
-                    borderBottom: '1px solid rgba(139, 92, 246, 0.2)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                  }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9b6bfb" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                        <polyline points="14 2 14 8 20 8"></polyline>
-                        <line x1="16" y1="13" x2="8" y2="13"></line>
-                        <line x1="16" y1="17" x2="8" y2="17"></line>
-                        <polyline points="10 9 9 9 8 9"></polyline>
-                      </svg>
-                      <span style={{ fontSize: '12px', fontWeight: 600, color: '#e1e1e9', fontFamily: 'monospace', letterSpacing: '0.3px' }}>
-                        {msg.file.name}
-                      </span>
-                      {msg.file.language === 'markdown' && (
-                        <div style={{ display: 'flex', gap: '4px', marginLeft: '12px', background: 'rgba(0,0,0,0.3)', borderRadius: '6px', padding: '3px' }}>
-                          <button 
-                            onClick={() => setMarkdownMode(prev => ({ ...prev, [msg.id]: 'code' }))}
+                  {msg.content}
+
+                  {/* YAML File Rendering */}
+                  {msg.file && (
+                    <div
+                      style={{
+                        marginTop: '16px',
+                        background: '#0d0e15',
+                        border: '1px solid rgba(139, 92, 246, 0.25)',
+                        borderRadius: '10px',
+                        overflow: 'hidden',
+                        boxShadow: '0 8px 30px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255,255,255,0.05)',
+                      }}
+                    >
+                      <div style={{
+                        padding: '8px 14px',
+                        background: 'rgba(124, 58, 237, 0.08)',
+                        borderBottom: '1px solid rgba(139, 92, 246, 0.2)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                      }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9b6bfb" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10 9 9 9 8 9"></polyline>
+                          </svg>
+                          <span style={{ fontSize: '12px', fontWeight: 600, color: '#e1e1e9', fontFamily: 'monospace', letterSpacing: '0.3px' }}>
+                            {msg.file.name}
+                          </span>
+                          {msg.file.language === 'markdown' && (
+                            <div style={{ display: 'flex', gap: '4px', marginLeft: '12px', background: 'rgba(0,0,0,0.3)', borderRadius: '6px', padding: '3px' }}>
+                              <button
+                                onClick={() => setMarkdownMode(prev => ({ ...prev, [msg.id]: 'code' }))}
+                                style={{
+                                  background: markdownMode[msg.id] === 'code' ? 'rgba(139, 92, 246, 0.2)' : 'transparent',
+                                  border: markdownMode[msg.id] === 'code' ? '1px solid rgba(139,92,246,0.3)' : '1px solid transparent',
+                                  color: markdownMode[msg.id] === 'code' ? '#fff' : 'var(--text-muted)',
+                                  fontSize: '11px', padding: '3px 10px', borderRadius: '4px', cursor: 'pointer', transition: 'all 0.2s', fontWeight: 600
+                                }}
+                              >Code</button>
+                              <button
+                                onClick={() => setMarkdownMode(prev => ({ ...prev, [msg.id]: 'preview' }))}
+                                style={{
+                                  background: markdownMode[msg.id] !== 'code' ? 'rgba(139, 92, 246, 0.2)' : 'transparent',
+                                  border: markdownMode[msg.id] !== 'code' ? '1px solid rgba(139,92,246,0.3)' : '1px solid transparent',
+                                  color: markdownMode[msg.id] !== 'code' ? '#fff' : 'var(--text-muted)',
+                                  fontSize: '11px', padding: '3px 10px', borderRadius: '4px', cursor: 'pointer', transition: 'all 0.2s', fontWeight: 600
+                                }}
+                              >Preview</button>
+                            </div>
+                          )}
+                        </div>
+                        {msg.file.language !== 'image' && msg.file.language !== 'pipeline' && (
+                          <button
                             style={{
-                              background: markdownMode[msg.id] === 'code' ? 'rgba(139, 92, 246, 0.2)' : 'transparent',
-                              border: markdownMode[msg.id] === 'code' ? '1px solid rgba(139,92,246,0.3)' : '1px solid transparent',
-                              color: markdownMode[msg.id] === 'code' ? '#fff' : 'var(--text-muted)',
-                              fontSize: '11px', padding: '3px 10px', borderRadius: '4px', cursor: 'pointer', transition: 'all 0.2s', fontWeight: 600
+                              background: 'transparent',
+                              border: '1px solid rgba(139, 92, 246, 0.3)',
+                              color: '#9b6bfb',
+                              fontSize: '11px',
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '5px',
+                              cursor: 'pointer',
+                              padding: '4px 8px',
+                              borderRadius: '6px',
+                              transition: 'all 0.2s',
+                              fontWeight: 600,
                             }}
-                          >Code</button>
-                          <button 
-                            onClick={() => setMarkdownMode(prev => ({ ...prev, [msg.id]: 'preview' }))}
-                            style={{
-                              background: markdownMode[msg.id] !== 'code' ? 'rgba(139, 92, 246, 0.2)' : 'transparent',
-                              border: markdownMode[msg.id] !== 'code' ? '1px solid rgba(139,92,246,0.3)' : '1px solid transparent',
-                              color: markdownMode[msg.id] !== 'code' ? '#fff' : 'var(--text-muted)',
-                              fontSize: '11px', padding: '3px 10px', borderRadius: '4px', cursor: 'pointer', transition: 'all 0.2s', fontWeight: 600
+                            onMouseEnter={e => {
+                              (e.currentTarget as HTMLButtonElement).style.background = 'rgba(124, 58, 237, 0.15)';
+                              (e.currentTarget as HTMLButtonElement).style.color = '#b18dfc';
                             }}
-                          >Preview</button>
-                        </div>
-                      )}
-                    </div>
-                    {msg.file.language !== 'image' && msg.file.language !== 'pipeline' && (
-                      <button 
-                        style={{
-                          background: 'transparent',
-                          border: '1px solid rgba(139, 92, 246, 0.3)',
-                          color: '#9b6bfb',
-                          fontSize: '11px',
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '5px',
-                          cursor: 'pointer',
-                          padding: '4px 8px',
-                          borderRadius: '6px',
-                          transition: 'all 0.2s',
-                          fontWeight: 600,
-                        }}
-                        onMouseEnter={e => { 
-                          (e.currentTarget as HTMLButtonElement).style.background = 'rgba(124, 58, 237, 0.15)'; 
-                          (e.currentTarget as HTMLButtonElement).style.color = '#b18dfc';
-                        }}
-                        onMouseLeave={e => { 
-                          (e.currentTarget as HTMLButtonElement).style.background = 'transparent'; 
-                          (e.currentTarget as HTMLButtonElement).style.color = '#9b6bfb';
-                        }}
-                        onClick={() => navigator.clipboard.writeText(msg.file!.content)}
-                      >
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                        </svg>
-                        Copy code
-                      </button>
-                    )}
-                  </div>
-                  <div style={{ padding: msg.file.language === 'pipeline' ? '24px' : '16px', overflowX: 'auto', background: '#0a0b10' }}>
-                    {msg.file.language === 'image' ? (
-                      <div style={{ display: 'flex', justifyContent: 'center' }}>
-                         <img src={msg.file.content} alt={msg.file.name} style={{ maxWidth: '100%', maxHeight: '400px', objectFit: 'contain', borderRadius: '6px', border: '1px solid rgba(139, 92, 246, 0.2)' }} />
-                      </div>
-                    ) : msg.file.language === 'pipeline' ? (
-                      <div style={{ fontFamily: 'Inter, sans-serif' }}>
-                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', marginBottom: '28px' }}>
-                          <div style={{ padding: '8px 14px', border: '1px solid rgba(139, 92, 246, 0.3)', borderRadius: '6px' }}>
-                            <div style={{ fontSize: '9px', color: '#6b7280', fontWeight: 700, letterSpacing: '1px', marginBottom: '4px' }}>PIPELINE</div>
-                            <div style={{ fontSize: '13px', color: '#e1e1e9', fontWeight: 600 }}>retail-footfall-tracking</div>
-                          </div>
-                          <div style={{ padding: '8px 14px', border: '1px solid rgba(59, 130, 246, 0.3)', borderRadius: '6px' }}>
-                            <div style={{ fontSize: '9px', color: '#6b7280', fontWeight: 700, letterSpacing: '1px', marginBottom: '4px' }}>TRIGGER</div>
-                            <div style={{ fontSize: '13px', color: '#60a5fa', fontWeight: 600 }}>continuous</div>
-                          </div>
-                          <div style={{ padding: '8px 14px', border: '1px solid rgba(156, 163, 175, 0.2)', borderRadius: '6px' }}>
-                            <div style={{ fontSize: '9px', color: '#6b7280', fontWeight: 700, letterSpacing: '1px', marginBottom: '4px' }}>VERSION</div>
-                            <div style={{ fontSize: '13px', color: '#9ca3af', fontWeight: 600 }}>1.0.0</div>
-                          </div>
-                        </div>
-
-                        <div style={{ fontSize: '10px', color: '#6b7280', fontWeight: 700, letterSpacing: '1px', marginBottom: '16px' }}>DATA FLOW</div>
-
-                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center', marginBottom: '32px' }}>
-                          {(msg.file.content.includes('[') ? JSON.parse(msg.file.content) : []).map((node: any, index: number, arr: any[]) => (
-                            <React.Fragment key={node.id}>
-                                <div style={{ 
-                                  padding: '12px 16px', 
-                                  border: '1px solid ' + node.color + '40', 
-                                  borderRadius: '8px', 
-                                  background: 'rgba(255,255,255,0.02)',
-                                  display: 'flex',
-                                  alignItems: 'center',
-                                  gap: '14px',
-                                  minWidth: '240px'
-                                }}>
-                                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={node.color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                    {node.icon === 'video' && <><path d="M23 7l-7 5 7 5V7z"></path><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></>}
-                                    {node.icon === 'refresh' && <><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></>}
-                                    {node.icon === 'target' && <><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="12" cy="12" r="3"></circle></>}
-                                    {node.icon === 'database' && <><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></>}
-                                    {node.icon === 'bell' && <><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></>}
-                                  </svg>
-                                  <div>
-                                    <div style={{ fontSize: '9px', color: node.color, fontWeight: 700, letterSpacing: '0.5px', textTransform: 'uppercase', marginBottom: '4px' }}>
-                                      {node.id} <span style={{ opacity: 0.6, marginLeft: '4px' }}>{node.type}</span>
-                                    </div>
-                                    <div style={{ fontSize: '13px', color: '#e1e1e9', fontWeight: 600 }}>
-                                      {node.title}
-                                    </div>
-                                    {node.sub && (
-                                      <div style={{ fontSize: '11px', color: '#6b7280', marginTop: '2px' }}>{node.sub}</div>
-                                    )}
-                                  </div>
-                                </div>
-                                {index < arr.length - 1 && (
-                                  <div style={{ color: '#4b5563' }}>
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                      <line x1="5" y1="12" x2="19" y2="12"></line>
-                                      <polyline points="12 5 19 12 12 19"></polyline>
-                                    </svg>
-                                  </div>
-                                )}
-                            </React.Fragment>
-                          ))}
-                        </div>
-
-                        <div style={{ padding: '14px 16px', background: '#050505', border: '1px solid #1f2937', borderRadius: '6px', fontFamily: '"Fira Code", monospace', fontSize: '12px', color: '#9ca3af' }}>
-                          <span style={{ color: '#6b7280' }}>flow: </span> 
-                          {(msg.file.content.includes('[') ? JSON.parse(msg.file.content) : []).map((n:any) => n.id).join(' -> ')}
-                        </div>
-                      </div>
-                    ) : (
-                      <pre style={{ margin: 0, fontSize: '13px', fontFamily: '"Fira Code", monospace', lineHeight: '1.6', whiteSpace: msg.file.language === 'markdown' && markdownMode[msg.id] !== 'code' ? 'pre-wrap' : 'pre' }}>
-                        {msg.file.language === 'markdown' ? (
-                          markdownMode[msg.id] === 'code' ? (
-                            // Raw code mode
-                            msg.file.content.split('\n').map((line, i) => (
-                              <div key={i} style={{ color: '#e1e1e9', minHeight: '19px' }}>{line}</div>
-                            ))
-                          ) : (
-                            // Preview mode
-                            msg.file.content.split('\n').map((line, i) => {
-                              const tLine = line.trim();
-                              if (tLine.startsWith('# ')) return <div key={i} style={{ color: '#9b6bfb', fontSize: '1.4em', fontWeight: 'bold', marginTop: '14px', marginBottom: '8px' }}>{tLine.substring(2)}</div>;
-                              if (tLine.startsWith('## ')) return <div key={i} style={{ color: '#a5d6ff', fontSize: '1.15em', fontWeight: 'bold', marginTop: '12px', marginBottom: '6px' }}>{tLine.substring(3)}</div>;
-                              if (tLine.startsWith('- ')) return <div key={i} style={{ color: '#e1e1e9', marginLeft: '14px', marginBottom: '4px' }}><span style={{ color: '#e3b341', marginRight: '6px' }}>•</span>{tLine.substring(2)}</div>;
-                              if (tLine.startsWith('1.') || tLine.startsWith('2.') || tLine.startsWith('3.')) return <div key={i} style={{ color: '#e1e1e9', marginLeft: '14px', marginBottom: '4px' }}><span style={{ color: '#fca5a5', marginRight: '6px', fontWeight: 'bold' }}>{tLine.substring(0, 2)}</span>{tLine.substring(2)}</div>;
-                              return <div key={i} style={{ color: '#e1e1e9', marginBottom: '6px', lineHeight: '1.5', minHeight: '19px' }}>{line}</div>;
-                            })
-                          )
-                        ) : (
-                          msg.file.content.split('\n').map((line, i) => {
-                            const trimmedLine = line.trim();
-                            const indentMatch = line.match(/^\s*/);
-                            const indent = indentMatch ? indentMatch[0] : '';
-                            
-                            // 1. Comments
-                            if (trimmedLine.startsWith('#')) {
-                              return <div key={i}><span style={{ whiteSpace: 'pre' }}>{indent}</span><span style={{ color: '#6A9955', fontStyle: 'italic' }}>{trimmedLine}</span></div>;
-                            }
-    
-                            // 2. Arrays / Dashes
-                            if (trimmedLine.startsWith('- ')) {
-                              const valPart = trimmedLine.substring(2);
-                              let valElement = <span style={{ color: '#e1e1e9' }}>{valPart}</span>;
-                              
-                              if (valPart.startsWith('"') || valPart.startsWith("'")) {
-                                const quote = valPart[0];
-                                const innerStr = valPart.substring(1, valPart.length - (valPart.endsWith(quote) ? 1 : 0));
-                                const endQuote = valPart.endsWith(quote) ? quote : '';
-                                valElement = (
-                                  <span>
-                                    <span style={{ color: '#fca5a5' }}>{quote}</span>
-                                    <span style={{ color: '#86efac' }}>{innerStr}</span>
-                                    <span style={{ color: '#fca5a5' }}>{endQuote}</span>
-                                  </span>
-                                );
-                              }
-                              return (
-                                <div key={i}>
-                                  <span style={{ whiteSpace: 'pre' }}>{indent}</span>
-                                  <span style={{ color: '#e3b341', fontWeight: 'bold' }}>- </span>
-                                  {valElement}
-                                </div>
-                              );
-                            }
-    
-                            // 3. Key-Value pairs
-                            const colonIndex = line.indexOf(':');
-                            if (colonIndex !== -1) {
-                              const keyPart = line.substring(0, colonIndex);
-                              const colonPart = ':';
-                              const valPart = line.substring(colonIndex + 1);
-                              const trimmedVal = valPart.trim();
-                              const valIndentMatch = valPart.match(/^\s*/);
-                              const valIndent = valIndentMatch ? valIndentMatch[0] : ' ';
-                              
-                              let valElement = <span style={{ color: '#e1e1e9' }}>{trimmedVal}</span>;
-                              
-                              if (trimmedVal.startsWith('"') || trimmedVal.startsWith("'")) {
-                                // Strings with separate quote styling
-                                const quote = trimmedVal[0];
-                                const innerStr = trimmedVal.substring(1, trimmedVal.length - (trimmedVal.endsWith(quote) ? 1 : 0));
-                                const endQuote = trimmedVal.endsWith(quote) ? quote : '';
-                                valElement = (
-                                  <span>
-                                    <span style={{ color: '#fca5a5' }}>{quote}</span>
-                                    <span style={{ color: '#86efac' }}>{innerStr}</span>
-                                    <span style={{ color: '#fca5a5' }}>{endQuote}</span>
-                                  </span>
-                                );
-                              } else if (trimmedVal === 'true' || trimmedVal === 'false') {
-                                // Booleans
-                                valElement = <span style={{ color: '#f472b6', fontWeight: 500 }}>{trimmedVal}</span>;
-                              } else if (!isNaN(Number(trimmedVal)) && trimmedVal !== '') {
-                                // Numbers
-                                valElement = <span style={{ color: '#fbbf24' }}>{trimmedVal}</span>;
-                              } else if (trimmedVal === '') {
-                                valElement = <span></span>; // empty value (like line with just "schedule:")
-                              }
-    
-                              return (
-                                <div key={i}>
-                                  <span style={{ color: '#9b6bfb', fontWeight: 500 }}>{keyPart}</span>
-                                  <span style={{ color: '#6b7280' }}>{colonPart}</span>
-                                  <span style={{ whiteSpace: 'pre' }}>{valIndent}</span>
-                                  {valElement}
-                                </div>
-                              );
-                            }
-                            return <div key={i} style={{ color: '#e1e1e9' }}><span style={{ whiteSpace: 'pre' }}>{indent}</span>{trimmedLine}</div>;
-                          })
+                            onMouseLeave={e => {
+                              (e.currentTarget as HTMLButtonElement).style.background = 'transparent';
+                              (e.currentTarget as HTMLButtonElement).style.color = '#9b6bfb';
+                            }}
+                            onClick={() => navigator.clipboard.writeText(msg.file!.content)}
+                          >
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                            Copy code
+                          </button>
                         )}
-                      </pre>
-                    )}
-                  </div>
-                </div>
-              )}
-            </div>
+                      </div>
+                      <div style={{ padding: msg.file.language === 'pipeline' ? '24px' : '16px', overflowX: 'auto', background: '#0a0b10' }}>
+                        {msg.file.language === 'image' ? (
+                          <div style={{ display: 'flex', justifyContent: 'center' }}>
+                            <img src={msg.file.content} alt={msg.file.name} style={{ maxWidth: '100%', maxHeight: '400px', objectFit: 'contain', borderRadius: '6px', border: '1px solid rgba(139, 92, 246, 0.2)' }} />
+                          </div>
+                        ) : msg.file.language === 'pipeline' ? (
+                          <div style={{ fontFamily: 'Inter, sans-serif' }}>
+                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', marginBottom: '28px' }}>
+                              <div style={{ padding: '8px 14px', border: '1px solid rgba(139, 92, 246, 0.3)', borderRadius: '6px' }}>
+                                <div style={{ fontSize: '9px', color: '#6b7280', fontWeight: 700, letterSpacing: '1px', marginBottom: '4px' }}>PIPELINE</div>
+                                <div style={{ fontSize: '13px', color: '#e1e1e9', fontWeight: 600 }}>retail-footfall-tracking</div>
+                              </div>
+                              <div style={{ padding: '8px 14px', border: '1px solid rgba(59, 130, 246, 0.3)', borderRadius: '6px' }}>
+                                <div style={{ fontSize: '9px', color: '#6b7280', fontWeight: 700, letterSpacing: '1px', marginBottom: '4px' }}>TRIGGER</div>
+                                <div style={{ fontSize: '13px', color: '#60a5fa', fontWeight: 600 }}>continuous</div>
+                              </div>
+                              <div style={{ padding: '8px 14px', border: '1px solid rgba(156, 163, 175, 0.2)', borderRadius: '6px' }}>
+                                <div style={{ fontSize: '9px', color: '#6b7280', fontWeight: 700, letterSpacing: '1px', marginBottom: '4px' }}>VERSION</div>
+                                <div style={{ fontSize: '13px', color: '#9ca3af', fontWeight: 600 }}>1.0.0</div>
+                              </div>
+                            </div>
 
-            {/* Interactive Options Rendering */}
-            {msg.options && msg.role === 'assistant' && (
-              <div style={{ display: 'flex', gap: '10px', marginTop: '12px', flexWrap: 'wrap' }}>
-                {msg.options.map((option, i) => (
-                  <button
-                    key={i}
-                    onClick={() => handleSend(option)}
-                    style={{
-                      padding: '8px 16px',
-                      background: 'rgba(124, 58, 237, 0.1)',
-                      border: '1px solid rgba(139, 92, 246, 0.4)',
-                      borderRadius: '8px',
-                      color: '#b18dfc',
-                      fontSize: '13px',
-                      fontWeight: 500,
-                      cursor: 'pointer',
-                      transition: 'all 0.2s',
-                    }}
-                    onMouseEnter={e => {
-                      (e.currentTarget as HTMLButtonElement).style.background = 'rgba(124, 58, 237, 0.25)';
-                      (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(139, 92, 246, 0.6)';
-                      (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(-1px)';
-                    }}
-                    onMouseLeave={e => {
-                      (e.currentTarget as HTMLButtonElement).style.background = 'rgba(124, 58, 237, 0.1)';
-                      (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(139, 92, 246, 0.4)';
-                      (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(0)';
-                    }}
-                  >
-                    {option}
-                  </button>
-                ))}
+                            <div style={{ fontSize: '10px', color: '#6b7280', fontWeight: 700, letterSpacing: '1px', marginBottom: '16px' }}>DATA FLOW</div>
+
+                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center', marginBottom: '32px' }}>
+                              {(msg.file.content.includes('[') ? JSON.parse(msg.file.content) : []).map((node: any, index: number, arr: any[]) => (
+                                <React.Fragment key={node.id}>
+                                  <div style={{
+                                    padding: '12px 16px',
+                                    border: '1px solid ' + node.color + '40',
+                                    borderRadius: '8px',
+                                    background: 'rgba(255,255,255,0.02)',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '14px',
+                                    minWidth: '240px'
+                                  }}>
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={node.color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                      {node.icon === 'video' && <><path d="M23 7l-7 5 7 5V7z"></path><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></>}
+                                      {node.icon === 'refresh' && <><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></>}
+                                      {node.icon === 'target' && <><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="12" cy="12" r="3"></circle></>}
+                                      {node.icon === 'database' && <><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></>}
+                                      {node.icon === 'bell' && <><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></>}
+                                    </svg>
+                                    <div>
+                                      <div style={{ fontSize: '9px', color: node.color, fontWeight: 700, letterSpacing: '0.5px', textTransform: 'uppercase', marginBottom: '4px' }}>
+                                        {node.id} <span style={{ opacity: 0.6, marginLeft: '4px' }}>{node.type}</span>
+                                      </div>
+                                      <div style={{ fontSize: '13px', color: '#e1e1e9', fontWeight: 600 }}>
+                                        {node.title}
+                                      </div>
+                                      {node.sub && (
+                                        <div style={{ fontSize: '11px', color: '#6b7280', marginTop: '2px' }}>{node.sub}</div>
+                                      )}
+                                    </div>
+                                  </div>
+                                  {index < arr.length - 1 && (
+                                    <div style={{ color: '#4b5563' }}>
+                                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                      </svg>
+                                    </div>
+                                  )}
+                                </React.Fragment>
+                              ))}
+                            </div>
+
+                            <div style={{ padding: '14px 16px', background: '#050505', border: '1px solid #1f2937', borderRadius: '6px', fontFamily: '"Fira Code", monospace', fontSize: '12px', color: '#9ca3af' }}>
+                              <span style={{ color: '#6b7280' }}>flow: </span>
+                              {(msg.file.content.includes('[') ? JSON.parse(msg.file.content) : []).map((n: any) => n.id).join(' -> ')}
+                            </div>
+                          </div>
+                        ) : (
+                          <pre style={{ margin: 0, fontSize: '13px', fontFamily: '"Fira Code", monospace', lineHeight: '1.6', whiteSpace: msg.file.language === 'markdown' && markdownMode[msg.id] !== 'code' ? 'pre-wrap' : 'pre' }}>
+                            {msg.file.language === 'markdown' ? (
+                              markdownMode[msg.id] === 'code' ? (
+                                // Raw code mode
+                                msg.file.content.split('\n').map((line, i) => (
+                                  <div key={i} style={{ color: '#e1e1e9', minHeight: '19px' }}>{line}</div>
+                                ))
+                              ) : (
+                                // Preview mode
+                                msg.file.content.split('\n').map((line, i) => {
+                                  const tLine = line.trim();
+                                  if (tLine.startsWith('# ')) return <div key={i} style={{ color: '#9b6bfb', fontSize: '1.4em', fontWeight: 'bold', marginTop: '14px', marginBottom: '8px' }}>{tLine.substring(2)}</div>;
+                                  if (tLine.startsWith('## ')) return <div key={i} style={{ color: '#a5d6ff', fontSize: '1.15em', fontWeight: 'bold', marginTop: '12px', marginBottom: '6px' }}>{tLine.substring(3)}</div>;
+                                  if (tLine.startsWith('- ')) return <div key={i} style={{ color: '#e1e1e9', marginLeft: '14px', marginBottom: '4px' }}><span style={{ color: '#e3b341', marginRight: '6px' }}>•</span>{tLine.substring(2)}</div>;
+                                  if (tLine.startsWith('1.') || tLine.startsWith('2.') || tLine.startsWith('3.')) return <div key={i} style={{ color: '#e1e1e9', marginLeft: '14px', marginBottom: '4px' }}><span style={{ color: '#fca5a5', marginRight: '6px', fontWeight: 'bold' }}>{tLine.substring(0, 2)}</span>{tLine.substring(2)}</div>;
+                                  return <div key={i} style={{ color: '#e1e1e9', marginBottom: '6px', lineHeight: '1.5', minHeight: '19px' }}>{line}</div>;
+                                })
+                              )
+                            ) : (
+                              msg.file.content.split('\n').map((line, i) => {
+                                const trimmedLine = line.trim();
+                                const indentMatch = line.match(/^\s*/);
+                                const indent = indentMatch ? indentMatch[0] : '';
+
+                                // 1. Comments
+                                if (trimmedLine.startsWith('#')) {
+                                  return <div key={i}><span style={{ whiteSpace: 'pre' }}>{indent}</span><span style={{ color: '#6A9955', fontStyle: 'italic' }}>{trimmedLine}</span></div>;
+                                }
+
+                                // 2. Arrays / Dashes
+                                if (trimmedLine.startsWith('- ')) {
+                                  const valPart = trimmedLine.substring(2);
+                                  let valElement = <span style={{ color: '#e1e1e9' }}>{valPart}</span>;
+
+                                  if (valPart.startsWith('"') || valPart.startsWith("'")) {
+                                    const quote = valPart[0];
+                                    const innerStr = valPart.substring(1, valPart.length - (valPart.endsWith(quote) ? 1 : 0));
+                                    const endQuote = valPart.endsWith(quote) ? quote : '';
+                                    valElement = (
+                                      <span>
+                                        <span style={{ color: '#fca5a5' }}>{quote}</span>
+                                        <span style={{ color: '#86efac' }}>{innerStr}</span>
+                                        <span style={{ color: '#fca5a5' }}>{endQuote}</span>
+                                      </span>
+                                    );
+                                  }
+                                  return (
+                                    <div key={i}>
+                                      <span style={{ whiteSpace: 'pre' }}>{indent}</span>
+                                      <span style={{ color: '#e3b341', fontWeight: 'bold' }}>- </span>
+                                      {valElement}
+                                    </div>
+                                  );
+                                }
+
+                                // 3. Key-Value pairs
+                                const colonIndex = line.indexOf(':');
+                                if (colonIndex !== -1) {
+                                  const keyPart = line.substring(0, colonIndex);
+                                  const colonPart = ':';
+                                  const valPart = line.substring(colonIndex + 1);
+                                  const trimmedVal = valPart.trim();
+                                  const valIndentMatch = valPart.match(/^\s*/);
+                                  const valIndent = valIndentMatch ? valIndentMatch[0] : ' ';
+
+                                  let valElement = <span style={{ color: '#e1e1e9' }}>{trimmedVal}</span>;
+
+                                  if (trimmedVal.startsWith('"') || trimmedVal.startsWith("'")) {
+                                    // Strings with separate quote styling
+                                    const quote = trimmedVal[0];
+                                    const innerStr = trimmedVal.substring(1, trimmedVal.length - (trimmedVal.endsWith(quote) ? 1 : 0));
+                                    const endQuote = trimmedVal.endsWith(quote) ? quote : '';
+                                    valElement = (
+                                      <span>
+                                        <span style={{ color: '#fca5a5' }}>{quote}</span>
+                                        <span style={{ color: '#86efac' }}>{innerStr}</span>
+                                        <span style={{ color: '#fca5a5' }}>{endQuote}</span>
+                                      </span>
+                                    );
+                                  } else if (trimmedVal === 'true' || trimmedVal === 'false') {
+                                    // Booleans
+                                    valElement = <span style={{ color: '#f472b6', fontWeight: 500 }}>{trimmedVal}</span>;
+                                  } else if (!isNaN(Number(trimmedVal)) && trimmedVal !== '') {
+                                    // Numbers
+                                    valElement = <span style={{ color: '#fbbf24' }}>{trimmedVal}</span>;
+                                  } else if (trimmedVal === '') {
+                                    valElement = <span></span>; // empty value (like line with just "schedule:")
+                                  }
+
+                                  return (
+                                    <div key={i}>
+                                      <span style={{ color: '#9b6bfb', fontWeight: 500 }}>{keyPart}</span>
+                                      <span style={{ color: '#6b7280' }}>{colonPart}</span>
+                                      <span style={{ whiteSpace: 'pre' }}>{valIndent}</span>
+                                      {valElement}
+                                    </div>
+                                  );
+                                }
+                                return <div key={i} style={{ color: '#e1e1e9' }}><span style={{ whiteSpace: 'pre' }}>{indent}</span>{trimmedLine}</div>;
+                              })
+                            )}
+                          </pre>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Interactive Options Rendering */}
+                {msg.options && msg.role === 'assistant' && (
+                  <div style={{ display: 'flex', gap: '10px', marginTop: '12px', flexWrap: 'wrap' }}>
+                    {msg.options.map((option, i) => (
+                      <button
+                        key={i}
+                        onClick={() => handleSend(option)}
+                        style={{
+                          padding: '8px 16px',
+                          background: 'rgba(124, 58, 237, 0.1)',
+                          border: '1px solid rgba(139, 92, 246, 0.4)',
+                          borderRadius: '8px',
+                          color: '#b18dfc',
+                          fontSize: '13px',
+                          fontWeight: 500,
+                          cursor: 'pointer',
+                          transition: 'all 0.2s',
+                        }}
+                        onMouseEnter={e => {
+                          (e.currentTarget as HTMLButtonElement).style.background = 'rgba(124, 58, 237, 0.25)';
+                          (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(139, 92, 246, 0.6)';
+                          (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(-1px)';
+                        }}
+                        onMouseLeave={e => {
+                          (e.currentTarget as HTMLButtonElement).style.background = 'rgba(124, 58, 237, 0.1)';
+                          (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(139, 92, 246, 0.4)';
+                          (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(0)';
+                        }}
+                      >
+                        {option}
+                      </button>
+                    ))}
+                  </div>
+                )}
+
+                <span style={{ fontSize: '10px', color: 'var(--text-muted)', marginTop: '4px', padding: '0 4px' }}>
+                  {msg.timestamp}
+                </span>
+              </div>
+            ))}
+
+            {/* Typing indicator */}
+            {isTyping && (
+              <div style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '10px' }}>
+                <div
+                  style={{
+                    padding: '12px 16px',
+                    borderRadius: '4px 14px 14px 14px',
+                    background: 'rgba(26, 24, 48, 0.8)',
+                    border: '1px solid var(--border-subtle)',
+                    display: 'flex',
+                    gap: '5px',
+                    alignItems: 'center',
+                  }}
+                >
+                  {[0, 1, 2].map(i => (
+                    <span
+                      key={i}
+                      className="typing-dot"
+                      style={{
+                        width: '6px',
+                        height: '6px',
+                        borderRadius: '50%',
+                        background: 'var(--accent-light)',
+                        display: 'block',
+                        animationDelay: `${i * 0.2}s`,
+                      }}
+                    />
+                  ))}
+                </div>
               </div>
             )}
-            
-            <span style={{ fontSize: '10px', color: 'var(--text-muted)', marginTop: '4px', padding: '0 4px' }}>
-              {msg.timestamp}
-            </span>
-          </div>
-        ))}
 
-        {/* Typing indicator */}
-        {isTyping && (
-          <div style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '10px' }}>
-            <div
-              style={{
-                padding: '12px 16px',
-                borderRadius: '4px 14px 14px 14px',
-                background: 'rgba(26, 24, 48, 0.8)',
-                border: '1px solid var(--border-subtle)',
-                display: 'flex',
-                gap: '5px',
-                alignItems: 'center',
-              }}
-            >
-              {[0, 1, 2].map(i => (
-                <span
-                  key={i}
-                  className="typing-dot"
-                  style={{
-                    width: '6px',
-                    height: '6px',
-                    borderRadius: '50%',
-                    background: 'var(--accent-light)',
-                    display: 'block',
-                    animationDelay: `${i * 0.2}s`,
-                  }}
-                />
-              ))}
+            <div ref={messagesEndRef} />
             </div>
           </div>
-        )}
 
-        <div ref={messagesEndRef} />
-      </div>
-
-      {/* Input Area Sticky Bottom */}
-      <div
-        style={{
-          padding: '0 20px 20px',
-          flexShrink: 0,
-          position: 'relative',
-          zIndex: 10,
-        }}
-      >
-        {renderInputArea()}
-        <p style={{ textAlign: 'center', fontSize: '10px', color: 'var(--text-muted)', marginTop: '8px' }}>
-          Edge-OS can make mistakes. Consider checking important information.
-        </p>
-      </div>
-    </>
-  )}
-</div>
+          {/* Input Area Sticky Bottom */}
+          <div
+            style={{
+              padding: '0 20px 20px',
+              flexShrink: 0,
+              position: 'relative',
+              zIndex: 10,
+            }}
+          >
+            <div style={{ maxWidth: '750px', width: '100%', margin: '0 auto' }}>
+              {renderInputArea()}
+              <p style={{ textAlign: 'center', fontSize: '10px', color: 'var(--text-muted)', marginTop: '8px' }}>
+                Edge-OS can make mistakes. Consider checking important information.
+              </p>
+            </div>
+          </div>
+        </>
+      )}
+    </div>
   );
 }
 

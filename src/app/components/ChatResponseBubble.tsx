@@ -4,7 +4,7 @@ import React from 'react';
 
 // Avatar Component
 export const Avatar = ({ initials }: { initials: string }) => (
-  <div className="flex items-center justify-center w-8 h-8 rounded-full bg-[#2d3043] text-sm font-semibold text-white shrink-0">
+  <div className="flex items-center justify-center w-8 h-8 rounded-full bg-[var(--bg-card-hover)] text-sm font-semibold text-[var(--text-primary)] shrink-0 border border-[var(--border-subtle)]">
     {initials}
   </div>
 );
@@ -18,7 +18,7 @@ export const SectionHeader = ({ children }: { children: React.ReactNode }) => (
 
 // Purple Link Component
 export const PurpleLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
-  <a href={href} className="text-[#9b6bfb] hover:text-[#b18dfc] transition-colors underline-offset-2 hover:underline" target="_blank" rel="noopener noreferrer">
+  <a href={href} className="text-[var(--accent-light)] hover:text-[var(--text-primary)] transition-colors underline-offset-2 hover:underline" target="_blank" rel="noopener noreferrer">
     {children}
   </a>
 );
@@ -63,10 +63,10 @@ interface ChatResponseProps {
 
 export const ChatResponseContainer = ({ confirmationText, children }: ChatResponseProps) => {
   return (
-    <div className="bg-[#1a1c2a] text-[#e1e1e9] p-6 md:p-8 rounded-2xl max-w-4xl w-full shadow-lg leading-relaxed border border-white/5 mx-auto">
+    <div className="bg-[var(--bg-chat)] backdrop-blur-[var(--glass-blur)] text-[var(--text-primary)] p-6 md:p-8 rounded-2xl max-w-4xl w-full shadow-[var(--shadow-premium)] leading-relaxed border border-[var(--border-subtle)] mx-auto">
       {/* Contextual Confirmation */}
       {confirmationText && (
-        <p className="mb-4 text-[#e1e1e9] opacity-90 text-[15px]">
+        <p className="mb-4 text-[var(--text-primary)] opacity-90 text-[15px]">
           {confirmationText}
         </p>
       )}

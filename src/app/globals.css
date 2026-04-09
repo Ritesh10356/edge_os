@@ -2,61 +2,64 @@
 @import "tailwindcss";
 
 :root {
-  /* ── Semi-transparent panel colors ── */
-  /* The gradient lives on <html>, panels let it bleed through */
-  --bg-sidebar:    rgba(28, 24, 68, 0.82);
-  --bg-chat:       rgba(20, 17, 55, 0.75);
-  --bg-config:     rgba(18, 15, 50, 0.78);
-  --bg-card:       rgba(38, 32, 90, 0.55);
-  --bg-card-hover: rgba(48, 42, 108, 0.65);
-  --bg-input:      rgba(26, 22, 70, 0.72);
-  --bg-header:     rgba(14, 11, 38, 0.60);
+  /* ── Deep Obsidian Purple Palette (Hunt AI Match) ── */
+  --bg-sidebar:    rgba(17, 15, 30, 0.95);
+  --bg-chat:       rgba(11, 8, 28, 0.65);
+  --bg-config:     rgba(13, 11, 32, 0.85);
+  --bg-card:       rgba(25, 20, 50, 0.40);
+  --bg-card-hover: rgba(35, 30, 70, 0.55);
+  --bg-input:      rgba(11, 8, 25, 0.60);
+  --bg-header:     rgba(13, 11, 32, 0.50);
 
-  /* ── Borders ── */
-  --border-subtle: rgba(140, 120, 255, 0.20);
-  --border-mid:    rgba(150, 130, 255, 0.32);
+  /* ── Precision Glass & Borders ── */
+  --border-subtle: rgba(139, 92, 246, 0.12);
+  --border-mid:    rgba(139, 92, 246, 0.28);
+  --border-glow:   rgba(139, 92, 246, 0.45);
 
-  /* ── Accent ── */
-  --accent-primary: #7c3aed;
+  /* ── Vibrant Lavender Accents ── */
+  --accent-primary: #8b5cf6;
   --accent-light:   #a78bfa;
-  --accent-glow:    rgba(124, 58, 237, 0.35);
+  --accent-glow:    rgba(139, 92, 246, 0.40);
+  --accent-gradient: linear-gradient(135deg, #7c3aed, #4f46e5);
 
-  /* ── Text ── */
-  --text-primary:   #ddd8f8;
-  --text-secondary: #9b97c0;
-  --text-muted:     #5a5878;
+  /* ── Pure Typography ── */
+  --text-primary:   #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted:     #64748b;
 
-  /* ── Shared gradients ── */
-  --gradient-purple: linear-gradient(135deg, #7c3aed, #4f46e5);
-  --shadow-glow:     0 0 30px rgba(124, 58, 237, 0.2);
+  /* ── Effects ── */
+  --shadow-premium: 0 10px 50px rgba(0, 0, 0, 0.6);
+  --glass-blur:     blur(32px);
+  --transition-smooth: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* ============================================================
-   RESET
-============================================================ */
-* { margin: 0; padding: 0; box-sizing: border-box; }
+   RESET & BASE
+ ============================================================ */
+* { 
+  margin: 0; 
+  padding: 0; 
+  box-sizing: border-box; 
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
 
 /* ============================================================
    HTML — THE GRADIENT LIVES HERE
-   Top (vivid purple) → Bottom (near-black navy)
-   Matching the reference screenshot exactly.
-   We put it on html (not body) so it fills the full viewport
-   and shows through the semi-transparent panels above it.
-============================================================ */
+ ============================================================ */
 html {
   height: 100%;
-  /* Top → Bottom gradient matching reference */
-  background-color: #0c0a28;
-  background-image: linear-gradient(
-    to bottom,
-    #16133a 0%,    /* TOP   — lightly darker indigo */
-    #110f30 15%,   /* near top */
-    #0d0b2a 35%,   /* upper mid */
-    #0a0822 55%,   /* mid */
-    #08061a 75%,   /* lower mid */
-    #060514 100%   /* BOTTOM — near black */
-  );
-  /* Ensure gradient covers the full screen */
+  background-color: #0b081a;
+  background-image: 
+    radial-gradient(circle at 10% 10%, rgba(124, 58, 237, 0.06) 0%, transparent 40%),
+    radial-gradient(circle at 90% 10%, rgba(99, 102, 241, 0.05) 0%, transparent 40%),
+    linear-gradient(
+      to bottom,
+      #131131 0%,    
+      #0e0c26 25%,   
+      #0a081d 50%,   
+      #070614 75%,   
+      #05040d 100%   
+    );
   background-attachment: fixed;
 }
 

@@ -89,10 +89,12 @@ export default function ConfigPanel({ agentName }: ConfigPanelProps) {
           style={{
             display: 'flex',
             gap: '4px',
-            background: 'rgba(26, 24, 48, 0.8)',
-            borderRadius: '8px',
-            padding: '3px',
+            background: 'var(--bg-input)',
+            borderRadius: '10px',
+            padding: '4px',
             border: '1px solid var(--border-subtle)',
+            backdropFilter: 'var(--glass-blur)',
+            WebkitBackdropFilter: 'var(--glass-blur)',
           }}
         >
           {(['configure', 'activity'] as Tab[]).map(tab => (
@@ -100,17 +102,17 @@ export default function ConfigPanel({ agentName }: ConfigPanelProps) {
               key={tab}
               onClick={() => setActiveTab(tab)}
               style={{
-                padding: '5px 12px',
-                background: activeTab === tab ? 'var(--gradient-purple)' : 'transparent',
+                padding: '6px 14px',
+                background: activeTab === tab ? 'var(--accent-gradient)' : 'transparent',
                 border: 'none',
-                borderRadius: '6px',
+                borderRadius: '8px',
                 color: activeTab === tab ? '#fff' : 'var(--text-muted)',
                 fontSize: '12px',
-                fontWeight: 500,
+                fontWeight: 600,
                 cursor: 'pointer',
                 fontFamily: 'Inter, sans-serif',
-                transition: 'all 0.2s',
-                boxShadow: activeTab === tab ? '0 0 12px rgba(124, 58, 237, 0.4)' : 'none',
+                transition: 'var(--transition-smooth)',
+                boxShadow: activeTab === tab ? '0 4px 12px var(--accent-glow)' : 'none',
               }}
             >
               {tab === 'configure' ? '⚙️ Configure' : '⚡ Activity'}
@@ -210,8 +212,8 @@ export default function ConfigPanel({ agentName }: ConfigPanelProps) {
                       transition: 'all 0.2s',
                       cursor: 'pointer',
                     }}
-                    onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.background = 'var(--bg-card-hover)'; }}
-                    onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.background = step.done ? 'rgba(16, 185, 129, 0.04)' : 'var(--bg-card)'; }}
+                    onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.background = 'var(--bg-card-hover)'; (e.currentTarget as HTMLDivElement).style.borderColor = 'var(--border-mid)'; }}
+                    onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.background = step.done ? 'rgba(16, 185, 129, 0.04)' : 'var(--bg-card)'; (e.currentTarget as HTMLDivElement).style.borderColor = step.done ? 'rgba(16, 185, 129, 0.15)' : 'var(--border-subtle)'; }}
                   >
                     <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
                       <span
@@ -269,8 +271,8 @@ export default function ConfigPanel({ agentName }: ConfigPanelProps) {
                       cursor: 'pointer',
                       transition: 'all 0.2s',
                     }}
-                    onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(139, 92, 246, 0.4)'; }}
-                    onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.borderColor = 'var(--border-subtle)'; }}
+                    onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.borderColor = 'var(--accent-light)'; (e.currentTarget as HTMLDivElement).style.background = 'rgba(255,255,255,0.05)'; }}
+                    onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.borderColor = 'var(--border-subtle)'; (e.currentTarget as HTMLDivElement).style.background = 'var(--bg-card)'; }}
                   >
                     <span>{tool.icon}</span> {tool.name}
                   </div>
@@ -359,20 +361,26 @@ export default function ConfigPanel({ agentName }: ConfigPanelProps) {
         </div>
         <button
           style={{
-            padding: '9px 24px',
-            background: 'var(--gradient-purple)',
+            padding: '10px 24px',
+            background: 'var(--accent-gradient)',
             border: 'none',
-            borderRadius: '8px',
+            borderRadius: '10px',
             color: '#fff',
             fontSize: '13px',
-            fontWeight: 600,
+            fontWeight: 700,
             cursor: 'pointer',
             fontFamily: 'Inter, sans-serif',
-            boxShadow: '0 0 20px rgba(124, 58, 237, 0.45)',
-            transition: 'all 0.2s',
+            boxShadow: '0 4px 20px var(--accent-glow)',
+            transition: 'var(--transition-smooth)',
           }}
-          onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 0 35px rgba(124, 58, 237, 0.7)'; }}
-          onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 0 20px rgba(124, 58, 237, 0.45)'; }}
+          onMouseEnter={e => { 
+            (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(-1px)';
+            (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 6px 30px var(--accent-glow)'; 
+          }}
+          onMouseLeave={e => { 
+            (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(0)';
+            (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 4px 20px var(--accent-glow)'; 
+          }}
         >
           ▶ Agent preview
         </button>
